@@ -153,20 +153,20 @@ def parentsPage(request):
         'children_ids': children_ids
     })
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
-@never_cache
-def teachersPage(request):
-    # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
-    if not request.user.is_authenticated:
-        return redirect('login_user')
-    name = request.session.get('name')
-    classroom = request.session.get('classroom')
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
+# @never_cache
+# def teachersPage(request):
+#     # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
+#     if not request.user.is_authenticated:
+#         return redirect('login_user')
+#     name = request.session.get('name')
+#     classroom = request.session.get('classroom')
 
-    return render(request, 'graduation_work/teachers_page.html', {
-        'name' : name,
-        'classroom': classroom
-    })
+#     return render(request, 'graduation_work/teachers_page.html', {
+#         'name' : name,
+#         'classroom': classroom
+#     })
 
 def show_users(request):
     users = []
@@ -275,6 +275,9 @@ def show_parents(request):
     return JsonResponse({'parents': parents}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
 # 부모님 컬렉션 값 보기
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
+@never_cache
 def showParents(request):
     for parent_doc in parents_collection.find({}):
         parent = {
@@ -299,6 +302,7 @@ def showParents(request):
                     "age": f"{age}세" if isinstance(age, int) else age,
                 })
 
+    print(f"로그인 후 부모님 이름: {parent.name}")
     return render(request, 'graduation_work/parents_page.html', {
         "parents": parent
     })
