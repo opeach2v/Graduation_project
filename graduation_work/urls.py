@@ -7,7 +7,7 @@ urlpatterns = [
     path('login/', views.login_user, name='login_user'),    # 로그인 페이지
     path('signup/', views.add_users, name='add_users'),    # 회원가입 페이지 및 회원가입 처리
     path('parents/', views.parentsPage, name='parents_page'),    # 부모님 페이지
-    path('teachers/', views.teachersPage, name='teachers_page'),    # 선생님 페이지
+    # path('teachers/', views.teachersPage, name='teachers_page'),    # 선생님 페이지
     path('logout/', views.logout_view, name='logout'),
 
     path('api/showNotice_cont/<str:id>/', views.showNotice_cont, name='showNotice_cont'),
@@ -16,7 +16,7 @@ urlpatterns = [
     path('show/', views.show_users),
     path('res_show/', views.showResults),
     path('show_children/', views.show_children),
-    path('show_parents/', views.showParents, name='showParent'),
+    path('show_parents/', views.showParents, name='showParent'),    # 선생님 페이지
     path('showparents/', views.show_parents),
 
     path('show_teachers/', views.showTeachers),
