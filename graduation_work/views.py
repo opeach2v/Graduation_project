@@ -308,7 +308,7 @@ def showParents(request):
                     "age": f"{age}세" if isinstance(age, int) else age,
                 })
 
-    print(f"로그인 후 부모님 이름: {parent.name}")
+    print(f"로그인 후 부모님 이름: {parent["name"]}")
     return render(request, 'graduation_work/parents_page.html', {
         "parents": parent
     })
