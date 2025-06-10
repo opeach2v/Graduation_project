@@ -431,8 +431,9 @@ def showNotice_cont(request, id):
         kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
         today = datetime.now(kst)
-        start = datetime(today.year, today.month, today.day, tzinfo=kst)    # 오늘 자정에서 
-        end = start + timedelta(days = 1)   # 내일 자정까지
+        # 자정으로 초기화 + 타임존 유지
+        start = today.replace(hour=0, minute=0, second=0)
+        end = start + timedelta(days=1)
 
         query = {
             'child_id': id,
