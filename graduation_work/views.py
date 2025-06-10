@@ -113,7 +113,7 @@ def login_user(request):
                 # role에 따라 리디렉션
                 if role == "parent":    # 부모님
                     # 로그인한 부모 사용자와 일치하는 부모 정보만 찾기
-                    parent_data = parents_collection.find_one({"username": username})
+                    parent_data = parents_collection.find_one({"name": user_data['name']})
                     # 세션에 저장 (조건: 존재하고 children_ids가 비어있지 않으면)
                     if parent_data and 'children_ids' in parent_data:
                         request.session['children_ids'] = [str(cid) for cid in parent_data['children_ids']]
