@@ -431,15 +431,11 @@ def showNotice_cont(request, id):
         start = datetime(today.year, today.month, today.day)    # 오늘 자정에서 
         end = start + timedelta(days = 1)   # 내일 자정까지
 
-        # ISO 8601 문자열로 변환(yyyy-mm-ddThh:mm:dd)
-        start_str = start.strftime("%Y-%m-%dT%H:%M:%S")
-        end_str = end.strftime("%Y-%m-%dT%H:%M:%S")
-
         query = {
             'child_id': id,
             'timestamp': {
-                '$gte': start_str,
-                '$lt': end_str
+                '$gte': start,
+                '$lt': end
             }
         }
         result = results_collection.find(query)
@@ -460,7 +456,7 @@ def showNotice_cont(request, id):
 
         if event_counts:
             sum_data['event_counts'] = event_counts
-            
+
         print(f"total_res: {total_res}, event_counts: {event_counts}")
 
         return JsonResponse(sum_data)
