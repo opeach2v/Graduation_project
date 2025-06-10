@@ -1,10 +1,5 @@
 // 알림장 팝업 띄우기
 function openPop(childName, childId) {
-    // 콘솔에서 보이기 
-    console.log("name: ", childName)
-    console.log("ID: ", childId)
-
-    
     document.getElementById("popup_layer").style.display = "block";
     document.querySelector("#popup_layer h2").innerText = `${childName}의 알림장`;
     fetch(`/api/showNotice_cont/${childId}/`)

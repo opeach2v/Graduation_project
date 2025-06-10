@@ -418,7 +418,10 @@ def writeNotice(request):
         )
 
 # 학부모가 알림장 내용 확인할 때 (알림장 내용과 위험 행동분석 결과 다 들고 오기)
-def showNotice_cont(id):
+def showNotice_cont(request, id):
+    # 이거 실행 됐는지 확인하려고
+    print(f"child_id: {id}")
+
     try:
         cont = notice_collection.find_one({'_id': ObjectId(id)}, {'content': 1, '_id': 0})
 
