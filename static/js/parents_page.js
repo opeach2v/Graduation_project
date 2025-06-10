@@ -7,7 +7,7 @@ function openPop(childName, childId) {
     
     document.getElementById("popup_layer").style.display = "block";
     document.querySelector("#popup_layer h2").innerText = `${childName}의 알림장`;
-    fetch(`/api/showNotice_cont/${id}/`)
+    fetch(`/api/showNotice_cont/${childId}/`)
         .then(response => response.json())
         .then(data => {
             if (data.content) { // 값이 있을 때만
