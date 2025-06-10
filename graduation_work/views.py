@@ -440,7 +440,7 @@ def showNotice_cont(request, id):
         }
         print(query)
         res = results_collection.find(query)
-        print(res)
+        print(list(res))
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
 
