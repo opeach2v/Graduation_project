@@ -114,6 +114,7 @@ def login_user(request):
                 if role == "parent":    # 부모님
                     # 로그인한 부모 사용자와 일치하는 부모 정보만 찾기
                     parent_data = parents_collection.find_one({"name": user_data['name']})
+                    print(f"parent_name: {user_data['name']}")
                     # 세션에 저장 (조건: 존재하고 children_ids가 비어있지 않으면)
                     if parent_data and 'children_ids' in parent_data:
                         request.session['children_ids'] = [str(cid) for cid in parent_data['children_ids']]
@@ -145,6 +146,7 @@ def parentsPage(request):
         return redirect('login_user')
     name = request.session.get('name')  # 세션에 저장했던 값 꺼냄
     children_ids = request.session.get('children_ids', [])  # 리스트 형태로 불러오기
+    print(f"로그인 후 세션: name={name}")
 
     return render(request, 'graduation_work/parents_page.html', {
         'name' : name,
