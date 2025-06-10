@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Django에서만 작동 -->
+    <link rel="icon" href="{% static 'media/webLogo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'media/webLogo.png' %}">
+    <!-- live server에서만 작동 -->
+    <link rel="icon" href="../media/webLogo.png">
+    <link rel="apple-touch-icon" href="../media/webLogo.png">
+    <!-- Django에서만 작동 -->
+    <link rel="stylesheet" href="{% static 'css/createId_style.css' %}">
+    <!-- live server에서만 작동 -->
+    <link rel="stylesheet" href="../static/css/createId_style.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>어린이가 위험해요!</title>
+</head>
+<body>
+    {% block asd %}
+    {% endblock %}
+    <script src="{% static 'js/register.js' %}"></script>
+    <main class="main-container">
+        <section class="create-container">
+            <div class="logo-area">
+                <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"><img src="{{ MEDIA_URL }}login_title.png" alt="타이틀" class="title"><br>
+            </div>
+            <div class="create-box">
+                <h2 style="text-align: center; margin-bottom: 10px;">회원가입</h2>
+                <form method="POST" action="{% url 'add_users' %}">
+                    <div class="select" style="margin-left: 15px;">
+                        <input type="radio" name="role" id="teacher" value="teacher"><label for="teacher" class="select-label">선생님</label>
+                        <input type="radio" name="role" id="parent" value="parent"><label for="parent" class="select-label">학부모</label>
+                    </div>
+                    <label for="username">아이디 (username)<p>*</p></label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    <label for="password">비밀번호 (password)<p>*</p></label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <label for="checkPassword">비밀번호 확인 (cheak password)<p>*</p></label>
+                    <input type="password" id="checkPassword" name="checkPassword" placeholder="Check your password" required>
+                    <label for="name">이름 (name)<p>*</p></label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    <label for="phoneNumber">전화번호 (phone number)<p>*</p></label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"
+                        oninput="hypenTel(this)" maxlength="13" placeholder="Enter your Phone number" required>
+                    
+                    <!-- 선생님 필드 -->
+                    <div id="teacher-field" class="role-fields">
+                        <label for="classroom">담당 반 (classroom)<p>*</p></label>
+                        <select id="classroom" name="classroom">
+                            <option name="classroom" value="사자반">사자반</option>
+                            <option name="classroom" value="호랑이반">호랑이반</option>
+                            <option name="classroom" value="곰반">곰반</option>
+                        </select>
+                    </div>
+                    <br>
+                    <button type="submit" class="createId-btn">저장</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

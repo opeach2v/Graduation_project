@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}어린이가 위험해요!{% endblock %}</title>
+        {% load static %}
+        {% load tz %}
+
+        {% block extra_headers %}
+        <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 동영상 플레이어 css & js -->
+        <link href="https://vjs.zencdn.net/8.22.0/video-js.css" rel="stylesheet" />
+        <script src="https://vjs.zencdn.net/8.22.0/video.min.js"></script>
+        <!-- Django에서만 작동 -->
+        <link rel="icon" href="{{ MEDIA_URL }}webLogo.png">
+        <link rel="apple-touch-icon" href="{{ MEDIA_URL }}webLogo.png">
+        <!-- Django에서만 작동 -->
+        <link rel="stylesheet" href="{% static 'css/parents_style.css' %}">
+    </head>
+    <body>
+        {% block asd %}
+        {% endblock %}
+        <!-- 메인 영역 -->
+        <!-- Django에서만 작동 -->
+        <script src="{% static 'js/parents_page.js' %}"></script>
+        <main class="main-container">
+            <header class="site-header">
+                <div class="logo-area">
+                    <a href=".">    <!-- 이미지 누르면 새로고침 되는.. -->
+                        <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
+                </div>
+                <h1 style="font-size: 25px; padding-left: 15px; margin: 5px;">{{ parents.name }} 학부모님, 반갑습니다!</h1>
+            </header>
+            <div class="popup_layer" id="today_popup_layer" style="display: none;">
+                <div class="popup_box">
+                    <div style="height: 10px; width: 375px; float: top;">
+                        <a href="javascript:closeTodayPop();"><img src="{{ MEDIA_URL }}ic_close.png" class="m_header-banner-close" width="30px" height="30px"></a>
+                    </div>
+                    <div class="popup_cont">
+                        <h2 style="text-align: center;"> 오늘의 하루 </h2>
+                        <h3 class="child-name">-------ooo 어린이-------</h3>
+                        <div class="wrap" id="wrap">
+                            <div class="prev"><img src="{{ MEDIA_URL }}prev.png"></div>
+                            <div class="box">
+                                <div class="slide_box">
+                                    <div class="slide_item">
+                                        <video
+                                            id="my-video"
+                                            class="video-js"
+                                            controls preload="auto"
+                                            width="280"
+                                            height="186"
+                                            poster="MY_VIDEO_POSTER.jpg"
+                                            data-setup="{}">
+                                            <source src="../media/daily.mp4" type="video/mp4" />
+                                            <p class="vjs-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a
+                                                web browser that
+                                                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                            </p>
+                                        </video>
+                                    </div>
+                                    <div class="slide_item">
+                                        <img src="{{ MEDIA_URL }}picnic.png" alt="2">
+                                    </div>
+                                    <div class="slide_item">
+                                        <img src="{{ MEDIA_URL }}realphoto.png" alt="3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next"><img src="{{ MEDIA_URL }}next.png"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup_layer" id="popup_layer" style="display: none;">
+                <div class="popup_box">
+                    <div style="height: 10px; width: 375px; float: top;">
+                        <a href="javascript:closePop();"><img src="{{ MEDIA_URL }}ic_close.png" class="m_header-banner-close" width="30px" height="30px"></a>
+                    </div>
+                    <div class="popup_cont">
+                        <h2> 알림장 </h2>
+                        <p>오늘은 날씨가 되게 좋아요^^<br>
+                        다른 아이들도 엄청 즐거워하고, 특히 우람이가 열심히 뛰어놀더라구요!<br>
+                        보람이는 오늘 좀 피곤한지 앉아만 있었습니다ㅠㅠ<br><br>
+                        그리구 너무 죄송하게도.. 오늘 우람이 위로 책이 떨어지는 아주 위험천만한 일이 있었는데 앞으로 더욱 신경 쓰도록 하겠습니다...<br><br>
+                        준비물: 양말, 모자, 장갑</p>
+                    </div>
+                    <div class="popup_cont">
+                        <h3 style="text-align: center; margin-bottom: 15px;"> * 오늘의 위험 행동: 2건</h3>
+                        <div class="wrap1" id="wrap1">
+                            <div class="prev1"><img src="{{ MEDIA_URL }}prev.png"></div>
+                            <div class="box1">
+                                <div class="slide_box1">
+                                    <div class="slide_item1">
+                                        <!-- <video
+                                            id="my-video"
+                                            class="video-js"
+                                            controls preload="auto"
+                                            width="280"
+                                            height="186"
+                                            poster="MY_VIDEO_POSTER.jpg"
+                                            data-setup="{}">
+                                            <source src="../media/danger.mp4" type="video/mp4" />
+                                            <p class="vjs-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a
+                                                web browser that
+                                                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                            </p>
+                                        </video> -->
+                                    </div>
+                                    <div class="slide_item1">
+                                        <img src="{{ MEDIA_URL }}angry.png" alt="2">
+                                    </div>
+                                    <div class="slide_item1">
+                                        <img src="{{ MEDIA_URL }}hurt.png" alt="3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next1"><img src="{{ MEDIA_URL }}next.png"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="homework-container" id="homeworkContainer">
+                <div class="homework-box">
+                    <div class="homework-list-box">
+                        {% if parents.children|length == 0 %}
+                        <p>자녀 없음</p><br>
+                        <button onclick="toggleAddForm('{{ parents.id }}')" class="child-add-btn">자녀 정보 추가하기</button>
+
+                        <div id="add-form-{{ parents.id }}" style="display:none; margin-top:10px;">
+                        <form method="POST" action="{% url 'add_child' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent_id" value="{{ parents.id }}">
+
+                            <label for="childname" class="childLabel">자녀 이름 (child name): <input id="childname" type="text" name="childname" class="childInput" placeholder="Enter your child's name *" required></label>
+                            <label for="birthdate" class="childLabel">자녀 생년월일 (birthday): <input type="date" name="birthdate" class="childInput" placeholder="Enter your child's birthday *" required></label>
+                            <label for="classroom" class="childLabel">자녀 소속 반 (classroom): 
+                                <select id="classroom" name="classroom">
+                                    <option name="classroom" value="사자반">사자반</option>
+                                    <option name="classroom" value="호랑이반">호랑이반</option>
+                                    <option name="classroom" value="곰반">곰반</option>
+                                </select>
+                            </label><br>
+                            <button type="submit" class="submit-btn">추가</button>
+                        </form>
+                        </div>
+
+                        {% else %}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>이름</th>
+                                    <th>나이</th>
+                                    <th> </th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for child in parents.children %}
+                                <tr>
+                                    <td>{{ child.name }}</td>
+                                    <td>{{ child.age }}</td>
+                                    <td><button class="list-comment-btn" onclick="javascript:openPop('{{ child.name }}')">알림장</button></td>
+                                    <td><button class="today-btn" onclick="javascript:openTodayPop('{{ child.name }}')"><img src="{{ MEDIA_URL }}photo.png"></button></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <button onclick="toggleAddForm('{{ parents.id }}')" class="child-add-btn">자녀 정보 추가하기</button>
+                            <div id="add-form-{{ parents.id }}" style="display:none; margin-top:10px;">
+                                <form method="POST" action="{% url 'add_child' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent_id" value="{{ parents.id }}">
+
+                                    <label for="childname" class="childLabel">자녀 이름 (child name): <input id="childname" type="text" name="childname" class="childInput" placeholder="Enter your child's name *" required></label>
+                                    <label for="birthdate" class="childLabel">자녀 생년월일 (birthday): <input type="date" name="birthdate" class="childInput" placeholder="Enter your child's birthday *" required></label>
+                                    <label for="classroom" class="childLabel">자녀 소속 반 (classroom): 
+                                        <select id="classroom" name="classroom">
+                                            <option name="classroom" value="사자반">사자반</option>
+                                            <option name="classroom" value="호랑이반">호랑이반</option>
+                                            <option name="classroom" value="곰반">곰반</option>
+                                        </select>
+                                    </label><br>
+                                    <button type="submit" class="submit-btn">추가</button>
+                                </form>
+                            </div>
+                        </table>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="other-box">
+                    <p class="headline"><img src="{{ MEDIA_URL }}icon_call.png" alt="전화 아이콘" class="img-icon">053-1234-5678</p><br>
+                    <p class="headline"><img src="{{ MEDIA_URL }}icon_email.png" alt="이메일 아이콘" class="img-icon">ppi_ppiyong@kindergarden.com</p><br>
+                    <details>
+                        <summary><img src="{{ MEDIA_URL }}icon_where.png" alt="위치 아이콘" class="img-icon">유치원 위치</summary>
+                        <div style="text-align: center;"><img src="{{ MEDIA_URL }}maps.png" alt="지도" class="map-img"></div>
+                    </details>
+                </div>
+            </section>
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="{% url 'logout' %}">로그아웃</a></li>
+                </ul>
+            </nav>
+        </main>
+    </body>
+</html>

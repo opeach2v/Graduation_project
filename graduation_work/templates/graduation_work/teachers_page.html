@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}어린이가 위험해요!{% endblock %}</title>
+    {% load static %}
+    {% load tz %}
+
+    {% block extra_headers %}
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock %}
+    <!-- Django에서만 작동 -->
+    <link rel="icon" href="{% static 'media/webLogo.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'media/webLogo.png' %}">
+    <!-- live server에서만 작동 -->
+    <link rel="icon" href="../media/webLogo.png">
+    <link rel="apple-touch-icon" href="../media/webLogo.png">
+    <!-- Django에서만 작동 -->
+    <link rel="stylesheet" href="{% static 'css/teachers_style.css' %}">
+    <!-- live server에서만 작동 -->
+    <link rel="stylesheet" href="../static/css/teachers_style.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+<body>
+    {% block asd %}
+    {% endblock %}
+    <!-- 메인 영역 -->
+    <!-- Django에서만 작동 -->
+    <script src="{% static 'js/teachers_page.js' %}"></script>
+    <!-- live server에서만 작동 -->
+    <script src="../static/js/teachers_page.js"></script>
+    <main class="main-container">
+        <header class="site-header">
+            <div class="logo-area">
+                <a href=".">    <!-- 이미지 누르면 새로고침 되는.. -->
+                    <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
+                <h1 style="font-size: 32px; padding-left: 15px;">{{ name }} 선생님, 반갑습니다!</h1>
+            </div>
+            <nav class="header-nav">
+                <ul>
+                    <li><a href="{% url 'logout' %}">로그아웃</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section class="homework-container" id="homeworkContainer">
+            <div class="homework-box">
+                <!-- <h2 style="margin-bottom: 13px; font-size: 25px; text-align: center;">알림장 작성</h2> -->
+                <div class="homework-list-box" id="tableArea">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>나이</th>
+                                <th><button class="list-comment-btn" onclick="javascript:openFormAll()">공통 내용</button></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>장슬히</td>
+                                <td>5세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>안채윤</td>
+                                <td>4세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>이예인</td>
+                                <td>3세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>신은지</td>
+                                <td>5세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>황연정</td>
+                                <td>4세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>홍길동</td>
+                                <td>3세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>뿡뿡이</td>
+                                <td>3세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>강얼지</td>
+                                <td>5세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>김이름</td>
+                                <td>3세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                            <tr>
+                                <td>오복숭</td>
+                                <td>4세</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 오른쪽 폼(공통 내용) -->
+                <div class="form-box" id="formAreaAll">
+                    <div class="form-content">
+                        <button class="x-btn" onclick="closeForm()">X</button>
+                        <h3 style="padding: 15px; padding-top: 25px;">알림장 공통 내용 작성</h3>
+                        <textarea placeholder="전달할 내용(이건 쓰지마세요):&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
+                        <button class="save-btn">저장</button><br>
+                        <button class="delete-btn">전체 내용 삭제</button>
+                    </div>
+                </div>
+
+                <!-- 오른쪽 폼(개인 알림장) -->
+                <div class="form-box" id="formArea">
+                    <div class="form-content">
+                        <button class="x-btn" onclick="closeForm()">X</button>
+                        <h3 style="padding: 15px; padding-top: 25px;">OOO의 알림장 내용 작성</h3>
+                        <textarea placeholder="전달할 내용(이건 쓰지마세요):&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
+                        <button class="save-btn">저장</button><br>
+                        <button class="delete-btn">전체 내용 삭제</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
