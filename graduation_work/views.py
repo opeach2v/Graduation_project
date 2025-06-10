@@ -279,7 +279,13 @@ def show_parents(request):
 @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
 @never_cache
 def showParents(request):
-    for parent_doc in parents_collection.find({}):
+    # 로그인 세션에서 부모 이름 가져오기
+    parent_name = request.session.get('name')
+    parent_doc = parents_collection.find_one({"name": parent_name})
+    if not parent_name:
+        # 세션에 이름이 없으면 로그인 페이지로 리다이렉트하거나 처리
+        return redirect('login_user')
+    else:
         parent = {
             "id": str(parent_doc.get("_id")),
             "name": parent_doc.get("name"),
