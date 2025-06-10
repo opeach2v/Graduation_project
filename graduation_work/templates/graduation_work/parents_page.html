@@ -86,14 +86,43 @@
                     </div>
                     <div class="popup_cont">
                         <h2> 알림장 </h2>
-                        <p>오늘은 날씨가 되게 좋아요^^<br>
-                        다른 아이들도 엄청 즐거워하고, 특히 우람이가 열심히 뛰어놀더라구요!<br>
-                        보람이는 오늘 좀 피곤한지 앉아만 있었습니다ㅠㅠ<br><br>
-                        그리구 너무 죄송하게도.. 오늘 우람이 위로 책이 떨어지는 아주 위험천만한 일이 있었는데 앞으로 더욱 신경 쓰도록 하겠습니다...<br><br>
-                        준비물: 양말, 모자, 장갑</p>
+                        <p>아직 알림장이 작성되지 않았습니다😊</p>
                     </div>
                     <div class="popup_cont">
-                        <h3 style="text-align: center; margin-bottom: 15px;"> * 오늘의 위험 행동: 2건</h3>
+                        <h3 style="text-align: center; margin-bottom: 15px;"> * 오늘의 행동 감지: 2건</h3>
+                        <!-- 위험 행동 각각의 갯수-->
+                        <table id="eventTable" style="border: 1; border-radius: 5px; text-align: center;">
+                            <tbody>
+                                <tr>
+                                    <th>standing</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>sitting</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>walking</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>running</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>playing</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>fighting</th>
+                                    <td> 0건 </td>
+                                </tr>
+                                <tr>
+                                    <th>falldown</th>
+                                    <td> 0건 </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <div class="wrap1" id="wrap1">
                             <div class="prev1"><img src="{{ MEDIA_URL }}prev.png"></div>
                             <div class="box1">
@@ -168,7 +197,7 @@
                                 <tr>
                                     <td>{{ child.name }}</td>
                                     <td>{{ child.age }}</td>
-                                    <td><button class="list-comment-btn" onclick="javascript:openPop('{{ child.name }}')">알림장</button></td>
+                                    <td><button class="list-comment-btn" onclick="javascript:openPop('{{ child.name }}', '{{ child.id }}')">알림장</button></td>
                                     <td><button class="today-btn" onclick="javascript:openTodayPop('{{ child.name }}')"><img src="{{ MEDIA_URL }}photo.png"></button></td>
                                 </tr>
                                 {% endfor %}

@@ -1,7 +1,33 @@
 // 알림장 팝업 띄우기
-function openPop(childName) {
+function openPop(childName, childId) {
+    // 콘솔에서 보이기 
+    console.log("name: ", childName)
+    console.log("ID: ", childId)
+
+    
     document.getElementById("popup_layer").style.display = "block";
     document.querySelector("#popup_layer h3").innerText = `${childName}의 알림장`;
+    fetch(`/api/showNotice_cont/${id}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.content) { // 값이 있을 때만
+                document.querySelector(".popup_cont p").innerText = data.content;
+            }
+
+            const rows = document.querySelectorAll("#eventTable tbody tr");
+
+            for(const [event, count] of Object.entries(data.event_counts)) {
+                for(const row of rows) {
+                    const th = row.querySelector("th");
+                    const td = row.querySelector("td");
+                    if(th && th.innerText.trim() === event) { // 이벤트 이름과 일치하면
+                        td.innerText = `${count}건`;    // 같은 인덱스 td에 값 넣기
+                        break;  // 다음 이벤트로 넘어가기 
+                    }
+                }
+            }
+        })
+        .catch(error => console.error('Error: ', error));
 }
 // 알림장 팝업 닫기
 function closePop() {
@@ -88,11 +114,11 @@ function toggleAddForm(parentId) {
 // js로 뒤로가기 감지해서 막기
 window.onload = function() {
     if (!'{{ request.session.username|default_if_none:"" }}') {
-      window.location.href = "{% url 'login_user' %}";
+        window.location.href = "{% url 'login_user' %}";
     }
-  };
+    };
 
-  window.history.pushState(null, "", window.location.href);
-  window.onpopstate = function () {
     window.history.pushState(null, "", window.location.href);
-  };
+    window.onpopstate = function () {
+    window.history.pushState(null, "", window.location.href);
+};

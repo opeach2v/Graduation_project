@@ -1,13 +1,13 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache, cache_control
 from django.utils.deprecation import MiddlewareMixin
-from .models import users_collection, results_collection, children_collection, teachers_collection, parents_collection
+from .models import users_collection, results_collection, children_collection, teachers_collection, parents_collection, notice_collection
 from . import models
 from django.contrib import messages
 import json, re
@@ -370,3 +370,74 @@ def show_children(request):
 def deleteChildren(request):
     res = children_collection.delete_many({})
     return HttpResponse(f"{res.deleted_count} documents deleted from 'actions'")
+
+# 선생님이 알림장 내용 작성해서 저장할 때
+def writeNotice(request):
+    if request.method == 'POST':
+        parent_id = request.POST.get('parent_id')
+        child_name = request.POST.get('childname')
+        birthdate = request.POST.get('birthdate')
+        classroom = request.POST.get('classroom')
+
+        format_birthdate = datetime.strptime(birthdate, '%Y-%m-%d')
+        # 데이터 생성
+        data = {
+            "name": child_name,
+            "birthdate": format_birthdate,
+            "parent_id": parent_id,
+            "classroom": classroom
+        }
+
+        # mongoDB에 어린이 데이터 저장
+        inserted_child = children_collection.insert_one(data)
+
+        child_id = inserted_child.inserted_id   # 자녀의 _id 가져오기
+
+        # 그리고 생성된 어린이 고유 id를 부모님 컬렉션에 업데이트
+        parents_collection.update_one(
+            {"_id": ObjectId(parent_id)},
+            {"$push": {"children_ids": child_id}}  # child_id
+        )
+
+# 학부모가 알림장 내용 확인할 때 (알림장 내용과 위험 행동분석 결과 다 들고 오기)
+def showNotice_cont(id):
+    try:
+        cont = notice_collection.find_one({'_id': ObjectId(id)}, {'content': 1, '_id': 0})
+
+        # 오늘 날짜 검색하기
+        today = datetime.today()
+        start = datetime(today.year, today.month, today.day)    # 오늘 자정에서 
+        end = start + timedelta(days = 1)   # 내일 자정까지
+
+        # ISO 8601 문자열로 변환(yyyy-mm-ddThh:mm:dd)
+        start_str = start.strftime("%Y-%m-%dT%H:%M:%S")
+        end_str = end.strftime("%Y-%m-%dT%H:%M:%S")
+
+        query = {
+            'child_id': id,
+            'date': {
+                '$gte': start_str,
+                '$lt': end_str
+            }
+        }
+        result = results_collection.find_one(query)
+        total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
+        event_counts = {}   # 각 행동들의 갯수
+
+        for doc in result:
+            event_type = doc.get('event_type')
+            if event_type:
+                event_counts[event_type] = event_counts.get(event_type, 0) + 1
+
+        if cont:
+            sum_data = {
+                **cont,
+                'total_res': total_res,
+                'event_counts': event_counts
+            }
+
+            return JsonResponse(sum_data)
+        else:
+            return JsonResponse({'error': 'Not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

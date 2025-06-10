@@ -6,6 +6,7 @@ children_collection = db['children']
 parents_collection = db['parents']
 teachers_collection = db['teachers']
 results_collection = db['ai_results']
+notice_collection = db['notice']
 
 class FileUploads(models.Model):
     title = models.CharField(max_length = 200)

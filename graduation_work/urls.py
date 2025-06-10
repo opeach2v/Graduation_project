@@ -10,6 +10,8 @@ urlpatterns = [
     path('teachers/', views.teachersPage, name='teachers_page'),    # 선생님 페이지
     path('logout/', views.logout_view, name='logout'),
 
+    path('api/showNotice_cont/<str:id>/', views.showNotice_cont, name='showNotice_cont'),
+
     # 데이터 확인용 
     path('show/', views.show_users),
     path('res_show/', views.showResults),

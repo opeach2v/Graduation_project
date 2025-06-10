@@ -298,6 +298,25 @@ details > summary::-webkit-details-marker {
 /*오버레이 뒷배경*/
 .popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
 
+/* 팝업 안에 행동 감지 건수 */
+.popup_cont table {
+    width: 70%;
+}
+.popup_cont table tbody tr {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+.popup_cont table tbody tr th {
+    width: 50%;
+    padding: 8px;
+    border-right: 1px solid #e5e5e5;
+    background: #fafafa;
+}
+.popup_cont table tbody tr td {
+    padding: 8px;
+    text-align: center;
+}
+
 /* 슬라이더 */
 .wrap {
     display: flex;
