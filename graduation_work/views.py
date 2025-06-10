@@ -456,6 +456,7 @@ def showNotice_cont(request, id):
                 'total_res': total_res,
                 'event_counts': event_counts
             }
+            print(f"total_res: {total_res}, event_counts: {event_counts}")
 
             return JsonResponse(sum_data)
         else:
