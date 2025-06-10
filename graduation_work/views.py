@@ -7,6 +7,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache, cache_control
 from django.utils.deprecation import MiddlewareMixin
+import pytz
 from .models import users_collection, results_collection, children_collection, teachers_collection, parents_collection, notice_collection
 from . import models
 from django.contrib import messages
@@ -426,9 +427,11 @@ def showNotice_cont(request, id):
         cont = notice_collection.find_one({'_id': ObjectId(id)}, {'content': 1, '_id': 0})
         print(f"cont:", cont)
 
+        # 한국 시간대
+        kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
-        today = datetime.today()
-        start = datetime(today.year, today.month, today.day)    # 오늘 자정에서 
+        today = datetime.now(kst)
+        start = datetime(today.year, today.month, today.day, tzinfo=kst)    # 오늘 자정에서 
         end = start + timedelta(days = 1)   # 내일 자정까지
 
         query = {
