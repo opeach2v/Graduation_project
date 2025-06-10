@@ -436,12 +436,12 @@ def showNotice_cont(request, id):
 
         query = {
             'child_id': id,
-            'date': {
+            'timestamp': {
                 '$gte': start_str,
                 '$lt': end_str
             }
         }
-        result = results_collection.find_one(query)
+        result = results_collection.find(query)
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
 
