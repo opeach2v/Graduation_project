@@ -261,8 +261,13 @@ def show_parents(request):
     for doc in parents_collection.find({}):
         name = doc.get("name")
         contact = doc.get("contact")
-        children_ids = doc.get("children_ids")
-        parents.append({"name": name, "contact": contact, "children_ids": str(children_ids)})
+        children_ids = doc.get("children_ids", [])
+        if isinstance(children_ids, list):
+            children_ids_str = [str(cid) for cid in children_ids]
+        else:   # 단일 id일 경우
+            children_ids_str = str(children_ids)
+
+        parents.append({"name": name, "contact": contact, "children_ids": children_ids_str})
     
     return JsonResponse({'parents': parents}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
