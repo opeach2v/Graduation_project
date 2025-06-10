@@ -451,16 +451,18 @@ def showNotice_cont(request, id):
             if event_type:
                 event_counts[event_type] = event_counts.get(event_type, 0) + 1
 
-        if cont:
-            sum_data = {
-                **cont,
-                'total_res': total_res,
-                'event_counts': event_counts
-            }
-            print(f"total_res: {total_res}, event_counts: {event_counts}")
+        sum_data = {}
+        if cont and 'content' in cont:
+            sum_data['content'] = cont['content']
 
-            return JsonResponse(sum_data)
-        else:
-            return JsonResponse({'error': 'Not found'}, status=404)
+        if total_res is not None:
+            sum_data['total_res'] = total_res
+
+        if event_counts:
+            sum_data['event_counts'] = event_counts
+            
+        print(f"total_res: {total_res}, event_counts: {event_counts}")
+
+        return JsonResponse(sum_data)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

@@ -12,15 +12,17 @@ function openPop(childName, childId) {
                 document.querySelector(".popup_cont h3").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
             }
 
-            const rows = document.querySelectorAll("#eventTable tbody tr");
-
-            for(const [event, count] of Object.entries(data.event_counts)) {
-                for(const row of rows) {
-                    const th = row.querySelector("th");
-                    const td = row.querySelector("td");
-                    if(th && th.innerText.trim() === event) { // 이벤트 이름과 일치하면
-                        td.innerText = `${count}건`;    // 같은 인덱스 td에 값 넣기
-                        break;  // 다음 이벤트로 넘어가기 
+            if (data.event_counts) {
+                const rows = document.querySelectorAll("#eventTable tbody tr");
+    
+                for(const [event, count] of Object.entries(data.event_counts)) {
+                    for(const row of rows) {
+                        const th = row.querySelector("th");
+                        const td = row.querySelector("td");
+                        if(th && th.innerText.trim() === event) { // 이벤트 이름과 일치하면
+                            td.innerText = `${count}건`;    // 같은 인덱스 td에 값 넣기
+                            break;  // 다음 이벤트로 넘어가기 
+                        }
                     }
                 }
             }
