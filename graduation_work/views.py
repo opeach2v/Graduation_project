@@ -262,7 +262,7 @@ def show_parents(request):
         name = doc.get("name")
         contact = doc.get("contact")
         children_ids = doc.get("children_ids")
-        parents.append({"name": name, "contact": contact, "children_ids": children_ids})
+        parents.append({"name": name, "contact": contact, "children_ids": str(children_ids)})
     
     return JsonResponse({'parents': parents}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
