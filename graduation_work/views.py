@@ -424,6 +424,7 @@ def showNotice_cont(request, id):
 
     try:
         cont = notice_collection.find_one({'_id': ObjectId(id)}, {'content': 1, '_id': 0})
+        print(f"cont:", cont)
 
         # 오늘 날짜 검색하기
         today = datetime.today()
