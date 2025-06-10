@@ -6,12 +6,15 @@ function openPop(childName, childId) {
 
     
     document.getElementById("popup_layer").style.display = "block";
-    document.querySelector("#popup_layer h3").innerText = `${childName}의 알림장`;
+    document.querySelector("#popup_layer h2").innerText = `${childName}의 알림장`;
     fetch(`/api/showNotice_cont/${id}/`)
         .then(response => response.json())
         .then(data => {
             if (data.content) { // 값이 있을 때만
                 document.querySelector(".popup_cont p").innerText = data.content;
+            }
+            if (data.total_res) {   // 값이 있을 때면 
+                document.querySelector(".popup_cont h3").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
             }
 
             const rows = document.querySelectorAll("#eventTable tbody tr");
