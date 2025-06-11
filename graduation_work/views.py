@@ -141,36 +141,36 @@ def login_user(request):
             return render(request, 'graduation_work/main.html', {'error': f"로그인 중 오류가 발생했습니다: {str(e)}"})
     return render(request, 'graduation_work/main.html')
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
-@never_cache
-def parentsPage(request):
-    # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
-    if not request.user.is_authenticated:
-        return redirect('login_user')
-    name = request.session.get('name')  # 세션에 저장했던 값 꺼냄
-    children_ids = request.session.get('children_ids', [])  # 리스트 형태로 불러오기
-    print(f"로그인 후 세션: name={name}")
-
-    return render(request, 'graduation_work/parents_page.html', {
-        'name' : name,
-        'children_ids': children_ids
-    })
-
 # @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 # @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
 # @never_cache
-# def teachersPage(request):
+# def parentsPage(request):
 #     # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
 #     if not request.user.is_authenticated:
 #         return redirect('login_user')
-#     name = request.session.get('name')
-#     classroom = request.session.get('classroom')
+#     name = request.session.get('name')  # 세션에 저장했던 값 꺼냄
+#     children_ids = request.session.get('children_ids', [])  # 리스트 형태로 불러오기
+#     print(f"로그인 후 세션: name={name}")
 
-#     return render(request, 'graduation_work/teachers_page.html', {
+#     return render(request, 'graduation_work/parents_page.html', {
 #         'name' : name,
-#         'classroom': classroom
+#         'children_ids': children_ids
 #     })
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
+@never_cache
+def teachersPage(request):
+    # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
+    if not request.user.is_authenticated:
+        return redirect('login_user')
+    name = request.session.get('name')
+    classroom = request.session.get('classroom')
+
+    return render(request, 'graduation_work/teachers_page.html', {
+        'name' : name,
+        'classroom': classroom
+    })
 
 def show_users(request):
     users = []

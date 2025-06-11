@@ -19,7 +19,7 @@ urlpatterns = [
     path('show/', views.show_users),
     path('res_show/', views.showResults),
     path('show_children/', views.show_children),
-    path('show_parents/', views.showParents, name='showParent'),    # 선생님 페이지
+    path('show_parents/', views.showParents, name='showParent'),    # 찐 학부모 페이지
     path('showparents/', views.show_parents),
 
     path('show_teachers/', views.showTeachers),
