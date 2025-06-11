@@ -11,8 +11,11 @@ function openPop(childName, childId) {
             console.log("data.total_res:", data.total_res);
 
             document.querySelector("#totalRes").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
-
-            if (data.event_counts && Object.keys(data.event_counts).length > 1) {
+            console.log("타입 확인:", typeof data.event_counts); 
+            console.log("is Array:", Array.isArray(data.event_counts));
+            console.log("is plain object:", data.event_counts.constructor === Object);
+            console.log("Object.keys length:", Object.keys(data.event_counts).length);
+            if (data.event_counts && Object.keys(data.event_counts).length > 0) {
                 const rows = document.querySelectorAll("#eventTable tbody tr");
     
                 for(const [event, count] of Object.entries(data.event_counts)) {
