@@ -479,7 +479,7 @@ def showNotice_cont(request, id):
 # 탈퇴하기
 @never_cache
 @login_required
-def withdrawalUser(request, name, id):
+def withdrawalUser(request, name):
     if request.method == 'POST':
         user = request.user
         # 몽고디비에서 해당 username 데이터 삭제
@@ -488,10 +488,12 @@ def withdrawalUser(request, name, id):
         delete_user = users_collection.delete_one({'username': username})  # username 기준 삭제
         print(f"users 컬렉션 삭제 결과: {delete_user.deleted_count}건 삭제됨")
         if parents_collection.find_one({'name': name}):
-            delete_parent = parents_collection.delete_many({'name': name})  # parents 기준 삭제
+            parent = parents_collection.find({'name': name})
+            delete_parent = parents_collection.delete_many({'name': parent[name]})  # parents 기준 삭제
             print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
-            child_id = list(children_collection.find({'parent_id': ObjectId(id)}))
-            delete_children = children_collection.delete_many({'parent_id': ObjectId(id)})
+            child_id = list(children_collection.find({'parent_id': parent['_id']}))
+            print(child_id)
+            delete_children = children_collection.delete_many({'parent_id': parent['_id']})
             for ids in child_id:
                 ress = results_collection.delete_many({'child_id': ids['child_id']})
                 print(f"{ids}의 ai 결과 컬렉션 삭제 결과: {ress.deleted_count}건 삭제됨")
