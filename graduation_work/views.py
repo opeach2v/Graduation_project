@@ -453,10 +453,13 @@ def showNotice_cont(request, id):
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
 
+        ALL_EVENTS = ["standing", "sitting", "walking", "running", "playing", "fighting", "falldown"]
+        event_counts = {event: 0 for event in ALL_EVENTS}
+
         for doc in results_collection.find(query):
             event_type = doc.get('event_type')
-            if event_type:
-                event_counts[event_type] = event_counts.get(event_type, 0) + 1
+            if event_type in event_counts:
+                event_counts[event_type] += 1
 
         sum_data = {}
         if cont and 'content' in cont:

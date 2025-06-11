@@ -15,7 +15,7 @@ function openPop(childName, childId) {
             console.log("is Array:", Array.isArray(data.event_counts));
             console.log("is plain object:", data.event_counts.constructor === Object);
             console.log("Object.keys length:", Object.keys(data.event_counts).length);
-            if (data.event_counts && Object.keys(data.event_counts).length > 0) {
+            if (data.event_counts) {
                 const rows = document.querySelectorAll("#eventTable tbody tr");
     
                 for(const [event, count] of Object.entries(data.event_counts)) {
@@ -27,14 +27,6 @@ function openPop(childName, childId) {
                             break;  // 다음 이벤트로 넘어가기 
                         }
                     }
-                }
-            }
-            else {
-                console.log("else 코드 실행 됨");
-                const rows = document.querySelectorAll("#eventTable tbody tr");
-                for(const row of rows) {
-                    const td = row.querySelector("td");
-                    td.innerText = `0건`;    // 같은 인덱스 td에 값 넣기
                 }
             }
         })
