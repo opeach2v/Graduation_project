@@ -51,6 +51,15 @@
             <nav class="header-nav">
                 <ul>
                     <li><a href="{% url 'logout' %}">로그아웃</a></li>
+                    <li style="color: rgb(116, 116, 116); font-size: 12px;">
+                        <a href="#" onclick="if(confirm('정말 탈퇴하시겠습니까?')) { document.getElementById('withdrawalForm').submit(); } return false;">
+                        회원탈퇴
+                        </a>
+                    </li>
+
+                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' parents.name %}" style="display:none;">
+                        {% csrf_token %}
+                    </form>
                 </ul>
             </nav>
         </header>
