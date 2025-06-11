@@ -466,8 +466,7 @@ def showNotice_cont(request, id):
             sum_data['total_res'] = total_res
         else: sum_data['total_res'] = 0
 
-        if event_counts:
-            sum_data['event_counts'] = event_counts
+        sum_data['event_counts'] = event_counts
 
         print(f"total_res: {total_res}, event_counts: {event_counts}")
 
