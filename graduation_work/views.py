@@ -432,7 +432,7 @@ def showNotice_cont(request, id):
         # 오늘 날짜 검색하기
         today = datetime.now(kst)
         # 자정으로 초기화 + 타임존 유지
-        start = today.replace(hour=0, minute=0, second=0)
+        start = today.replace(hour=0, minute=0, second=0, microsecond=0)
         end = start + timedelta(days=1)
 
         query = {
