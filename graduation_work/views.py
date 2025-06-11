@@ -114,6 +114,7 @@ def login_user(request):
                 request.session['role'] = user_data.get("role")
                 request.session['name'] = user_data.get("name")
                 name = user_data.get("name")
+                print(f"로그인된 사용자: {name}")
             
                 # role에 따라 리디렉션
                 if role == "parent":    # 부모님
