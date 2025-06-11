@@ -47,9 +47,12 @@ def add_users(request):
 
             # 비밀번호 해싱
             # hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
+            
             # Django User 모델에도 계정 추가 
             if not User.objects.filter(username=username).exists():
+                messages.error(request, "이미 존재하는 아이디입니다.")
+                return redirect('add_users')
+            else:
                 user = User.objects.create_user(username=username, password=password)
 
             # 데이터 생성
