@@ -244,7 +244,7 @@
                         </a>
                     </li>
 
-                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' %}" style="display:none;">
+                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' parents.name parents.id %}" style="display:none;">
                         {% csrf_token %}
                     </form>
                 </ul>

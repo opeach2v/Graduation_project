@@ -479,12 +479,29 @@ def showNotice_cont(request, id):
 # 탈퇴하기
 @never_cache
 @login_required
-def withdrawalUser(request):
+def withdrawalUser(request, name, id):
     if request.method == 'POST':
         user = request.user
         # 몽고디비에서 해당 username 데이터 삭제
         username = user.username
-        users_collection.delete_many({'username': username})  # username 기준 삭제
+        print(f"탈퇴 시도: username={username}")
+        delete_user = users_collection.delete_one({'username': username})  # username 기준 삭제
+        print(f"users 컬렉션 삭제 결과: {delete_user.deleted_count}건 삭제됨")
+        if parents_collection.find_one({'name': name}):
+            delete_parent = parents_collection.delete_many({'name': name})  # parents 기준 삭제
+            print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
+            child_id = list(children_collection.find({'parent_id': ObjectId(id)}))
+            delete_children = children_collection.delete_many({'parent_id': ObjectId(id)})
+            for ids in child_id:
+                ress = results_collection.delete_many({'child_id': ids['child_id']})
+                print(f"{ids}의 ai 결과 컬렉션 삭제 결과: {ress.deleted_count}건 삭제됨")
+            print(f"학부모의 자녀 컬렉션 삭제 결과: {delete_children.deleted_count}건 삭제됨")
+        elif teachers_collection.find_one({'name': name}):
+            delete_teacher = teachers_collection.delete_many({'name': name})    # teachers 기준 삭제
+            print(f"선생님 컬렉션 삭제 결과: {delete_teacher.deleted_count}건 삭제됨")
+        else:
+            print(f"존재하지 않음")
+
         # Django auth User 삭제
         user.delete()
         # 로그아웃 처리
