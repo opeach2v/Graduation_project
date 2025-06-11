@@ -57,7 +57,7 @@
                         </a>
                     </li>
 
-                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' parents.name %}" style="display:none;">
+                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' name %}" style="display:none;">
                         {% csrf_token %}
                     </form>
                 </ul>
