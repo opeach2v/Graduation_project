@@ -42,8 +42,8 @@
                     <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
                 <h1 style="font-size: 32px; padding-left: 15px;">
                     {{ teachers.classroom }}
-                    {% if classroom == "사자반" %}🦁
-                    {% elif classroom == "호랑이반" %}🐯
+                    {% if teachers.classroom == "사자반" %}🦁
+                    {% elif teachers.classroom == "호랑이반" %}🐯
                     {% else %}🐻
                     {% endif %}
                     {{ teachers.name }} 선생님, 반갑습니다!</h1>
