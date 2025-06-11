@@ -10,7 +10,7 @@ function openPop(childName, childId) {
             }
             console.log("data.total_res:", data.total_res);
 
-            document.querySelector(".popup_cont h3").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
+            document.querySelector("#totalRes").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
 
             if (data.event_counts) {
                 const rows = document.querySelectorAll("#eventTable tbody tr");
