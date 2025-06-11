@@ -282,7 +282,7 @@ def show_parents(request):
     
     return JsonResponse({'parents': parents}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
-# 부모님 컬렉션 값 보기
+# 이게 진짜 학부모 페이지 역할
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
 @never_cache
