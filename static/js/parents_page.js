@@ -32,6 +32,13 @@ function openPop(childName, childId) {
 // 알림장 팝업 닫기
 function closePop() {
     document.getElementById("popup_layer").style.display = "none";
+    document.querySelector("#totalRes").innerText = `* 오늘의 행동 감지: 0건`;
+
+    const rows = document.querySelectorAll("#eventTable tbody tr");
+    for(const row of rows) {
+        const td = row.querySelector("td");
+        td.innerText = `0건`;
+    }
 }
 
 // 오늘의 하루 팝업 띄우기
