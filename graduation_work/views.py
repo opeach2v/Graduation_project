@@ -126,7 +126,7 @@ def login_user(request):
                         request.session['children_ids'] = []  # 기본값
                     return redirect('showParent')
                 elif role == "teacher": # 선생님
-                    teacher_data = teachers_collection.find_one({"username": username})
+                    teacher_data = teachers_collection.find_one({"name": name})
                     if teacher_data and 'classroom' in teacher_data:
                         request.session['classroom'] = teacher_data.get('classroom')
                     return redirect('teachers_page')
