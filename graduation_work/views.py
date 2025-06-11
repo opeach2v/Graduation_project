@@ -479,6 +479,11 @@ def showNotice_cont(request, id):
 def withdrawalUser(request):
     if request.method == 'POST':
         user = request.user
+        # 몽고디비에서 해당 username 데이터 삭제
+        username = user.username
+        users_collection.delete_many({'username': username})  # username 기준 삭제
+        # Django auth User 삭제
         user.delete()
+        # 로그아웃 처리
         logout(request)
         return redirect('login_user')
