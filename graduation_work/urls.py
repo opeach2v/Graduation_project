@@ -12,6 +12,9 @@ urlpatterns = [
 
     path('api/showNotice_cont/<str:id>/', views.showNotice_cont, name='showNotice_cont'),
 
+    # 회원 탈퇴용
+    path("bye/", views.withdrawalUser, name='withdrawalUser'),
+
     # 데이터 확인용 
     path('show/', views.show_users),
     path('res_show/', views.showResults),

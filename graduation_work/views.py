@@ -471,3 +471,14 @@ def showNotice_cont(request, id):
         return JsonResponse(sum_data)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+
+# 탈퇴하기
+@never_cache
+@login_required
+def withdrawalUser(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        logout(request)
+        return redirect('login_user')
