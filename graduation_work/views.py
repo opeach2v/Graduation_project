@@ -218,14 +218,18 @@ def input_results(request):
             child_id = request.POST.get('child_id')
             event_type = request.POST.get('action')
             confidence = request.POST.get('confidence')
-            timestamp = request.POST.get('timestamp')
+            timestamp_str = request.POST.get('timestamp')
+
+            kst = pytz.timezone('Asia/Seoul')
+            dt = datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S")  # naive datetime
+            dt_kst = kst.localize(dt)  # KST timezone-aware datetime
 
             # 데이터 생성
             data = {
                 "child_id": child_id,
                 "event_type": event_type,
                 "confidence": confidence,
-                "timestamp": timestamp
+                "timestamp": dt_kst
             }
 
             # mongoDB에 저장
@@ -457,7 +461,7 @@ def showNotice_cont(request, id):
         if cont and 'content' in cont:
             sum_data['content'] = cont['content']
 
-        if total_res is not None:
+        if total_res > 0:
             sum_data['total_res'] = total_res
 
         if event_counts:
