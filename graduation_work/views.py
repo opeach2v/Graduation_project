@@ -490,8 +490,8 @@ def withdrawalUser(request, name):
         delete_user = users_collection.delete_one({'username': username})  # username 기준 삭제
         print(f"users 컬렉션 삭제 결과: {delete_user.deleted_count}건 삭제됨")
         if parents_collection.find_one({'name': name}):
-            parent = parents_collection.find({'name': name})
-            delete_parent = parents_collection.delete_many({'name': parent[name]})  # parents 기준 삭제
+            parent = parents_collection.find_one({'name': name})
+            delete_parent = parents_collection.delete_many({'name': name})  # parents 기준 삭제
             print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
             child_id = list(children_collection.find({'parent_id': parent['_id']}))
             print(child_id)
