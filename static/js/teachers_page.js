@@ -10,11 +10,13 @@ function openForm(childName, childId) {
   const formAreaLog = document.getElementById('formAreaLog');
 
   container.classList.add('open');
+  formArea.style.display = 'block';
   formArea.style.width = '400px';
   formArea.style.padding = '1px';      // 보여줄 때만 padding 추가
   formArea.style.opacity = '1';
   formArea.style.pointerEvents = 'auto';
 
+  formAreaLog.style.display = 'none';
   formAreaLog.style.width = '0';
   formAreaLog.style.padding = '0';      // 안 보이게 padding 제거
   formAreaLog.style.opacity = '0';
@@ -28,11 +30,13 @@ function openLogForm(teacher_id) {
   const formAreaLog = document.getElementById('formAreaLog');
 
   container.classList.add('open');
+  formAreaLog.style.display = 'block';
   formAreaLog.style.width = '400px';
   formAreaLog.style.padding = '1px';
   formAreaLog.style.opacity = '1';
   formAreaLog.style.pointerEvents = 'auto';
 
+  formAreaLog.style.display = 'none';
   formArea.style.width = '0';
   formArea.style.padding = '0';
   formArea.style.opacity = '0';
@@ -42,13 +46,7 @@ function openLogForm(teacher_id) {
   fetch(`/api/notice_logs/${teacher_id}/`)
     .then(res => res.json())
     .then(data => {
-      const container = document.querySelector("#formAreaLog .form-content");
-
-      // 기존 내용 초기화
-      container.innerHTML = `
-        <button class="x-btn" onclick="closeForm()">X</button>
-        <h3 style="padding: 15px; padding-top: 25px;">알림장 로그</h3>
-      `;
+      const container = document.querySelector("#formAreaLog .form-content"); 
 
       if (data.notices.length === 0) {
         const empty = document.createElement("div");
@@ -90,11 +88,13 @@ function closeForm() {
   const formAreaLog = document.getElementById('formAreaLog');
   const container = document.getElementById('homeworkContainer');
 
+  formArea.style.display = 'none';
   formArea.style.width = '0';
   formArea.style.padding = '0';
   formArea.style.opacity = '0';
   formArea.style.pointerEvents = 'none';
 
+  formAreaLog.style.display = 'none';
   formAreaLog.style.width = '0';
   formAreaLog.style.padding = '0';
   formAreaLog.style.opacity = '0';
