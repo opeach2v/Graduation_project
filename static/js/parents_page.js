@@ -12,7 +12,7 @@ function openPop(childName, childId) {
 
             document.querySelector("#totalRes").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
 
-            if (data.event_counts) {
+            if (data.event_counts && Object.keys(data.event_counts).length > 0) {
                 const rows = document.querySelectorAll("#eventTable tbody tr");
     
                 for(const [event, count] of Object.entries(data.event_counts)) {
