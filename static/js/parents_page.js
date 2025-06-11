@@ -27,6 +27,7 @@ function openPop(childName, childId) {
                 }
             }
             else {
+                console.log("else 코드 실행 됨");
                 const rows = document.querySelectorAll("#eventTable tbody tr");
                 for(const row of rows) {
                     const td = row.querySelector("td");
