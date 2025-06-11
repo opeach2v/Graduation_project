@@ -9,10 +9,8 @@ function openPop(childName, childId) {
                 document.querySelector(".popup_cont p").innerText = data.content;
             }
             console.log("data.total_res:", data.total_res);
-            const totalResNum = Number(data.total_res);
-            if (totalResNum > 0) {   // 값이 있을 때면 
-                document.querySelector(".popup_cont h3").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
-            }
+
+            document.querySelector(".popup_cont h3").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
 
             if (data.event_counts) {
                 const rows = document.querySelectorAll("#eventTable tbody tr");
