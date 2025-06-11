@@ -492,6 +492,7 @@ def withdrawalUser(request, name):
         if parents_collection.find_one({'name': name}):
             parent = parents_collection.find_one({'name': name})
             print(list(parent))
+            print(type(parent['_id']))
             delete_parent = parents_collection.delete_many({'name': name})  # parents 기준 삭제
             print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
             child_id = list(children_collection.find({'parent_id': parent['_id']}))
