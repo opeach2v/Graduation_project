@@ -10,7 +10,12 @@ urlpatterns = [
     path('teachers/', views.teachersPage, name='teachers_page'),    # 선생님 페이지
     path('logout/', views.logout_view, name='logout'),
 
+    # 알림장 내용 확인
     path('api/showNotice_cont/<str:id>/', views.showNotice_cont, name='showNotice_cont'),
+    # 알림장 쓰기
+    path('api/writeNotice/<str:id>/<str:classroom>/', views.writeNotice, name='writeNotice'),
+    # 알림장 모든 내용 가져오기
+    path('api/get_notice_logs/<str:id>/', views.get_notice_logs, name='get_notice_logs'),
 
     # 회원 탈퇴용
     path("bye/<str:name>/", views.withdrawalUser, name='withdrawalUser'),

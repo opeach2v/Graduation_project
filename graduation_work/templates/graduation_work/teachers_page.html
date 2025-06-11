@@ -41,23 +41,23 @@
                 <a href=".">    <!-- 이미지 누르면 새로고침 되는.. -->
                     <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
                 <h1 style="font-size: 32px; padding-left: 15px;">
-                    {{ classroom }}
+                    {{ teachers.classroom }}
                     {% if classroom == "사자반" %}🦁
                     {% elif classroom == "호랑이반" %}🐯
                     {% else %}🐻
                     {% endif %}
-                    {{ name }} 선생님, 반갑습니다!</h1>
+                    {{ teachers.name }} 선생님, 반갑습니다!</h1>
             </div>
             <nav class="header-nav">
                 <ul>
                     <li><a href="{% url 'logout' %}">로그아웃</a></li>
-                    <li style="color: rgb(116, 116, 116); font-size: 12px;">
-                        <a href="#" onclick="if(confirm('정말 탈퇴하시겠습니까?')) { document.getElementById('withdrawalForm').submit(); } return false;">
+                    <li>
+                        <a style="color: rgb(116, 116, 116);" href="#" onclick="if(confirm('정말 탈퇴하시겠습니까?')) { document.getElementById('withdrawalForm').submit(); } return false;">
                         회원탈퇴
                         </a>
                     </li>
 
-                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' name %}" style="display:none;">
+                    <form id="withdrawalForm" method="POST" action="{% url 'withdrawalUser' teachers.name %}" style="display:none;">
                         {% csrf_token %}
                     </form>
                 </ul>
@@ -67,90 +67,46 @@
             <div class="homework-box">
                 <!-- <h2 style="margin-bottom: 13px; font-size: 25px; text-align: center;">알림장 작성</h2> -->
                 <div class="homework-list-box" id="tableArea">
+                    {% if teachers.children | length == 0 %}
+                    <p style="text-align: center; padding: 20px; font-size: 18px;">아직 해당 반 소속 아이가 없습니다.</p><br>
+
+                    {% else %}
                     <table>
                         <thead>
                             <tr>
                                 <th>이름</th>
                                 <th>나이</th>
-                                <th><button class="list-comment-btn" onclick="javascript:openFormAll()">공통 내용</button></th>
+                                <th><button class="list-comment-btn" onclick="javascript:openLogForm('{{ teachers.id }}')">알림장장 로그</button></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for child in teachers.children %}
                             <tr>
-                                <td>장슬히</td>
-                                <td>5세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
+                                <td>{{ child.name }}</td>
+                                <td>{{ child.age }}</td>
+                                <td><button class="list-comment-btn" onclick="javascript:openForm('{{ child.name }}', '{{ child.id }}')">알림장</button></td>
                             </tr>
-                            <tr>
-                                <td>안채윤</td>
-                                <td>4세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>이예인</td>
-                                <td>3세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>신은지</td>
-                                <td>5세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>황연정</td>
-                                <td>4세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>홍길동</td>
-                                <td>3세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>뿡뿡이</td>
-                                <td>3세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>강얼지</td>
-                                <td>5세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>김이름</td>
-                                <td>3세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
-                            <tr>
-                                <td>오복숭</td>
-                                <td>4세</td>
-                                <td><button class="list-comment-btn" onclick="javascript:openForm()">알림장</button></td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
-
-                <!-- 오른쪽 폼(공통 내용) -->
-                <div class="form-box" id="formAreaAll">
-                    <div class="form-content">
-                        <button class="x-btn" onclick="closeForm()">X</button>
-                        <h3 style="padding: 15px; padding-top: 25px;">알림장 공통 내용 작성</h3>
-                        <textarea placeholder="전달할 내용(이건 쓰지마세요):&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
-                        <button class="save-btn">저장</button><br>
-                        <button class="delete-btn">전체 내용 삭제</button>
-                    </div>
-                </div>
-
+                {% endif %}
                 <!-- 오른쪽 폼(개인 알림장) -->
                 <div class="form-box" id="formArea">
                     <div class="form-content">
                         <button class="x-btn" onclick="closeForm()">X</button>
-                        <h3 style="padding: 15px; padding-top: 25px;">OOO의 알림장 내용 작성</h3>
-                        <textarea placeholder="전달할 내용(이건 쓰지마세요):&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
-                        <button class="save-btn">저장</button><br>
-                        <button class="delete-btn">전체 내용 삭제</button>
+                        <h3 style="padding: 15px; padding-top: 25px;">ooo의 알림장 내용 작성</h3>
+                        <form id="writeNotice" method="POST">
+                            {% csrf_token %}
+                            <textarea id="noticeContent" name="content" placeholder="전달할 내용:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
+                            <button type="submit" class="save-btn">저장</button><br>
+                            <button class="delete-btn" onclick="javascript:clearForm()">전체 내용 삭제</button> <!-- 이건 그냥 textarea 내용만 지우는 거임 -->
+                        </form>
                     </div>
                 </div>
+
+                <!-- 오른쪽 폼(알림장 로그들) -->
+                <!-- 은 자바 스크립트에 존재 -->
             </div>
         </section>
     </main>

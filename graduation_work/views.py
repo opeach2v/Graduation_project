@@ -143,35 +143,84 @@ def login_user(request):
             return render(request, 'graduation_work/main.html', {'error': f"로그인 중 오류가 발생했습니다: {str(e)}"})
     return render(request, 'graduation_work/main.html')
 
-# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-# @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
-# @never_cache
-# def parentsPage(request):
-#     # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
-#     if not request.user.is_authenticated:
-#         return redirect('login_user')
-#     name = request.session.get('name')  # 세션에 저장했던 값 꺼냄
-#     children_ids = request.session.get('children_ids', [])  # 리스트 형태로 불러오기
-#     print(f"로그인 후 세션: name={name}")
 
-#     return render(request, 'graduation_work/parents_page.html', {
-#         'name' : name,
-#         'children_ids': children_ids
-#     })
+# 이게 진짜 학부모 페이지 역할
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
+@never_cache
+def showParents(request):
+    # 로그인 세션에서 부모 이름 가져오기
+    parent_name = request.session.get('name')
+    parent_doc = parents_collection.find_one({"name": parent_name})
+    if not parent_name:
+        # 세션에 이름이 없으면 로그인 페이지로 리다이렉트하거나 처리
+        return redirect('login_user')
+    else:
+        parent = {
+            "id": str(parent_doc.get("_id")),
+            "name": parent_doc.get("name"),
+            "contact": parent_doc.get("contact"),
+            "children": []
+        }
+
+        for cid in parent_doc.get("children_ids", []):
+            child = children_collection.find_one({"_id": ObjectId(cid)})
+            if child:
+                birthdate = child.get("birthdate")
+                if birthdate and isinstance(birthdate, datetime):
+                    age = calculate_age(birthdate.date())  # datetime.date로 변환
+                else:
+                    age = "정보 없음"
+
+                parent["children"].append({
+                    "id": str(child["_id"]),
+                    "name": child["name"],
+                    "age": f"{age}세" if isinstance(age, int) else age,
+                })
+
+    print(f"로그인 후 부모님 이름: {parent["name"]}")
+    return render(request, 'graduation_work/parents_page.html', {
+        "parents": parent
+    })
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
 @never_cache
 def teachersPage(request):
-    # 로그인 안 햇는데도 URL로 접근하려고 하면 막음
-    if not request.user.is_authenticated:
+    # 로그인 세션에서 정보 가져오기
+    teacher_name = request.session.get('name')
+    teacher_doc = teachers_collection.find_one({"name": teacher_name})
+    if not teacher_name:
+        # 세션에 이름 없으면 로그인 페이지로 리다이렉트하거나 처리
         return redirect('login_user')
-    name = request.session.get('name')
-    classroom = request.session.get('classroom')
+    else:
+        teacher = {
+            "id": str(teacher_doc.get("_id")),
+            "name": teacher_name,
+            "contact": teacher_doc.get("contact"),
+            "classroom": teacher_doc.get("classroom"),
+            "children": []  # 선생님이 담당하는 어린이 목록
+        }
+
+        # 선생님이 담당하는 어린이 목록 가져오기
+        for child in children_collection.find({"classroom": teacher_doc.get("classroom")}):
+            # 아이들 나이 계산 추가
+            birthdate = child.get("birthdate")
+            if birthdate and isinstance(birthdate, datetime):
+                age = calculate_age(birthdate.date())  # datetime.date로 변환
+            else:
+                age = "정보 없음"
+
+            teacher["children"].append({
+                "id": str(child["_id"]),
+                "name": child["name"],
+                "age": f"{age}세" if isinstance(age, int) else age,
+                "parent_id": str(child.get("parent_id"))
+            })
+
 
     return render(request, 'graduation_work/teachers_page.html', {
-        'name' : name,
-        'classroom': classroom
+        "teachers": teacher
     })
 
 def show_users(request):
@@ -284,44 +333,6 @@ def show_parents(request):
     
     return JsonResponse({'parents': parents}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
-# 이게 진짜 학부모 페이지 역할
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='login_user')  # 로그인 안 했으면 로그인 페이지로 리다이렉트
-@never_cache
-def showParents(request):
-    # 로그인 세션에서 부모 이름 가져오기
-    parent_name = request.session.get('name')
-    parent_doc = parents_collection.find_one({"name": parent_name})
-    if not parent_name:
-        # 세션에 이름이 없으면 로그인 페이지로 리다이렉트하거나 처리
-        return redirect('login_user')
-    else:
-        parent = {
-            "id": str(parent_doc.get("_id")),
-            "name": parent_doc.get("name"),
-            "contact": parent_doc.get("contact"),
-            "children": []
-        }
-
-        for cid in parent_doc.get("children_ids", []):
-            child = children_collection.find_one({"_id": ObjectId(cid)})
-            if child:
-                birthdate = child.get("birthdate")
-                if birthdate and isinstance(birthdate, datetime):
-                    age = calculate_age(birthdate.date())  # datetime.date로 변환
-                else:
-                    age = "정보 없음"
-
-                parent["children"].append({
-                    "id": str(child["_id"]),
-                    "name": child["name"],
-                    "age": f"{age}세" if isinstance(age, int) else age,
-                })
-
-    print(f"로그인 후 부모님 이름: {parent["name"]}")
-    return render(request, 'graduation_work/parents_page.html', {
-        "parents": parent
-    })
 
 # 만 나이 계산 함수
 def calculate_age(birthdate):
@@ -399,33 +410,28 @@ def deleteChildren(request):
     res = children_collection.delete_many({})
     return HttpResponse(f"{res.deleted_count} documents deleted from 'actions'")
 
-# 선생님이 알림장 내용 작성해서 저장할 때
-def writeNotice(request):
-    if request.method == 'POST':
-        parent_id = request.POST.get('parent_id')
-        child_name = request.POST.get('childname')
-        birthdate = request.POST.get('birthdate')
-        classroom = request.POST.get('classroom')
-
-        format_birthdate = datetime.strptime(birthdate, '%Y-%m-%d')
-        # 데이터 생성
-        data = {
-            "name": child_name,
-            "birthdate": format_birthdate,
-            "parent_id": parent_id,
+# 선생님이 알림장 내용 작성해서 저장할 때 사용
+def writeNotice(request, teacher_id, classroom):
+    if request.method == 'POST':      
+        content = request.POST.get('content')
+        child_id = request.POST.get('child_id') # 열려있는 알림장 주인(어린이 ID)
+        if not content:
+            return JsonResponse({"error": "내용을 입력해주세요."}, status=400)
+        
+        child_doc = children_collection.find_one({"child_id": child_id})    # 열린 알림장의 아이 정보 가져오기
+        kst = ZoneInfo("Asia/Seoul")
+        now_kst = datetime.now(kst)
+        notice = {
+            "child_id": child_doc.get("_id"),
+            "content": content,
+            "timestamp": now_kst,  # 현재 시간
+            "teacher_id": teacher_id,
             "classroom": classroom
         }
 
-        # mongoDB에 어린이 데이터 저장
-        inserted_child = children_collection.insert_one(data)
+        notice_collection.insert_one(notice)
+        return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
 
-        child_id = inserted_child.inserted_id   # 자녀의 _id 가져오기
-
-        # 그리고 생성된 어린이 고유 id를 부모님 컬렉션에 업데이트
-        parents_collection.update_one(
-            {"_id": ObjectId(parent_id)},
-            {"$push": {"children_ids": child_id}}  # child_id
-        )
 
 # 학부모가 알림장 내용 확인할 때 (알림장 내용과 위험 행동분석 결과 다 들고 오기)
 def showNotice_cont(request, id):
@@ -433,9 +439,6 @@ def showNotice_cont(request, id):
     print(f"child_id: {id}")
 
     try:
-        cont = notice_collection.find_one({'_id': ObjectId(id)}, {'content': 1, '_id': 0})
-        print(f"cont:", cont)
-
         # 한국 시간대
         kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
@@ -451,6 +454,9 @@ def showNotice_cont(request, id):
                 '$lt': end
             }
         }
+        cont = notice_collection.find_one(query, {'content': 1, '_id': 0})
+        print(f"cont:", cont)
+
         results_collection.find(query)
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
@@ -479,6 +485,31 @@ def showNotice_cont(request, id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
     
+# 선생님 그동안 쓴 모든 알림장 내용 확인하기
+def get_notice_logs(request, teacher_id):
+    # teacher_id로 선생님이 쓴 알림장 모두 가져오기
+    notice_doc = list(notice_collection.find({"teacher_id": teacher_id}, {"content": 1, "_id": 0}).sort("timestamp", -1))
+
+    notice = []
+    for doc in notice_doc:
+        # 날짜만 추출 (timestamp가 datetime인 경우)
+        date_only = doc["date"].strftime("%Y-%m-%d") if "timestamp" in doc else ""
+
+        # child_id로 이름 조회
+        child_name = children_collection.find_one({"_id": doc.get("child_id")}, {"name": 1})
+
+        # 최종 정리
+        notice.append({
+            "child_id": str(doc.get("child_id")),
+            "teacher_id": teacher_id,
+            "classroom": doc.get("classroom", ""),
+            "content": doc.get("content", ""),
+            "date": date_only,
+            "child_name": child_name
+        })
+
+    # MongoDB의 ObjectId 등 직렬화 문제 해결 위해 dumps 사용
+    return JsonResponse({"notices": notice})
 
 # 탈퇴하기
 @never_cache
