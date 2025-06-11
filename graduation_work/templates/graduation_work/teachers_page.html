@@ -65,9 +65,8 @@
         </header>
         <section class="homework-container" id="homeworkContainer">
             <div class="homework-box">
-                <!-- <h2 style="margin-bottom: 13px; font-size: 25px; text-align: center;">알림장 작성</h2> -->
                 <div class="homework-list-box" id="tableArea">
-                    {% if teachers.children | length == 0 %}
+                    {% if teachers.children|length == 0 %}
                     <p style="text-align: center; padding: 20px; font-size: 18px;">아직 해당 반 소속 아이가 없습니다.</p><br>
 
                     {% else %}
