@@ -2,7 +2,7 @@
 let currentChildId = null;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
 
 function openForm(childName, childId) {
-  document.querySelector("#popup_layer h2").innerText = `${childName}의 알림장 내용 작성성`;
+  document.querySelector("#popup_layer h3").innerText = `${childName}의 알림장 내용 작성`;
   currentChildId = childId;  // 현재 열려있는 아이의 ID 저장
 
   const container = document.getElementById('homeworkContainer');
@@ -87,7 +87,7 @@ function openLogForm(teacher_id) {
 
 function closeForm() {
   const formArea = document.getElementById('formArea');
-  const formAreaAll = document.getElementById('formAreaAll');
+  const formAreaLog = document.getElementById('formAreaLog');
   const container = document.getElementById('homeworkContainer');
 
   formArea.style.width = '0';
@@ -95,10 +95,10 @@ function closeForm() {
   formArea.style.opacity = '0';
   formArea.style.pointerEvents = 'none';
 
-  formAreaAll.style.width = '0';
-  formAreaAll.style.padding = '0';
-  formAreaAll.style.opacity = '0';
-  formAreaAll.style.pointerEvents = 'none';
+  formAreaLog.style.width = '0';
+  formAreaLog.style.padding = '0';
+  formAreaLog.style.opacity = '0';
+  formAreaLog.style.pointerEvents = 'none';
 
   container.classList.remove('open');
 }

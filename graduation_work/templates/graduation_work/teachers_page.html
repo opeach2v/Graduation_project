@@ -75,7 +75,7 @@
                             <tr>
                                 <th>이름</th>
                                 <th>나이</th>
-                                <th><button class="list-comment-btn" onclick="javascript:openLogForm('{{ teachers.id }}')">알림장장 로그</button></th>
+                                <th><button class="list-comment-btn" onclick="javascript:openLogForm('{{ teachers.id }}')">알림장 로그</button></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,7 +105,11 @@
                 </div>
 
                 <!-- 오른쪽 폼(알림장 로그들) -->
-                <!-- 은 자바 스크립트에 존재 -->
+                <div class="form-box" id="formAreaLog">
+                    <div class="form-content">
+                        <!-- 여기에 JS로 로그 내용 추가됨 -->
+                    </div>
+                </div>
             </div>
         </section>
     </main>
