@@ -38,48 +38,48 @@ function openLogForm(teacher_id) {
   formArea.style.opacity = '0';
   formArea.style.pointerEvents = 'none';
 
-  // 알림장 내용 채우기 (AJAX)
-  fetch(`/api/notice_logs/${teacher_id}/`)
-    .then(res => res.json())
-    .then(data => {
-      container.innerHTML = `
-        <button class="x-btn" onclick="closeForm()">X</button>
-        <h3 style="padding: 15px; padding-top: 25px;">알림장 로그</h3>
-      `;
+  // // 알림장 내용 채우기 (AJAX)
+  // fetch(`/api/notice_logs/${teacher_id}/`)
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     container.innerHTML = `
+  //       <button class="x-btn" onclick="closeForm()">X</button>
+  //       <h3 style="padding: 15px; padding-top: 25px;">알림장 로그</h3>
+  //     `;
 
-      if (data.notices.length === 0) {
-        const empty = document.createElement("div");
-        empty.textContent = "지금까지 작성된 알림장이 없습니다.";
-        empty.style.padding = "10px 15px";
-        container.appendChild(empty);
-        return;
-      }
+  //     if (data.notices.length === 0) {
+  //       const empty = document.createElement("div");
+  //       empty.textContent = "지금까지 작성된 알림장이 없습니다.";
+  //       empty.style.padding = "10px 15px";
+  //       container.appendChild(empty);
+  //       return;
+  //     }
 
-      data.notices.forEach((notice, index) => {
-        // 아코디언 버튼 생성
-        const button = document.createElement("button");
-        button.className = "accordion";
-        button.textContent = `${notice.child_name}의 알림장&nbsp;&nbsp;${notice.date}`;
-        container.appendChild(button);
+  //     data.notices.forEach((notice, index) => {
+  //       // 아코디언 버튼 생성
+  //       const button = document.createElement("button");
+  //       button.className = "accordion";
+  //       button.textContent = `${notice.child_name}의 알림장&nbsp;&nbsp;${notice.date}`;
+  //       container.appendChild(button);
 
-        // 패널 생성
-        const panel = document.createElement("div");
-        panel.className = "panel";
-        panel.style.display = "none"; // 기본은 닫힘
-        panel.innerHTML = `<p>${notice.content}</p>`;
-        container.appendChild(panel);
+  //       // 패널 생성
+  //       const panel = document.createElement("div");
+  //       panel.className = "panel";
+  //       panel.style.display = "none"; // 기본은 닫힘
+  //       panel.innerHTML = `<p>${notice.content}</p>`;
+  //       container.appendChild(panel);
 
-        // 버튼 클릭 시 토글 동작
-        button.addEventListener("click", () => {
-          const isOpen = panel.style.display === "block";
-          panel.style.display = isOpen ? "none" : "block";
-        });
-      });
-    })
-    .catch(err => {
-      alert("알림장 데이터를 불러오는 데 실패했습니다.");
-      console.error(err);
-    });
+  //       // 버튼 클릭 시 토글 동작
+  //       button.addEventListener("click", () => {
+  //         const isOpen = panel.style.display === "block";
+  //         panel.style.display = isOpen ? "none" : "block";
+  //       });
+  //     });
+  //   })
+  //   .catch(err => {
+  //     alert("알림장 데이터를 불러오는 데 실패했습니다.");
+  //     console.error(err);
+  //   });
 };
 
 function closeForm() {
