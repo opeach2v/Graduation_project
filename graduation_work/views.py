@@ -278,14 +278,13 @@ def input_results(request):
             kst = pytz.timezone('Asia/Seoul')
             dt = datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S")  # naive datetime
             dt_kst = kst.localize(dt)  # KST timezone-aware datetime
-            utc_dt = dt_kst.astimezone(pytz.utc)  # UTC로 변환
 
             # 데이터 생성
             data = {
                 "child_id": child_id,
                 "event_type": event_type,
                 "confidence": confidence,
-                "timestamp": utc_dt
+                "timestamp": dt_kst
             }
 
             # mongoDB에 저장
@@ -461,11 +460,22 @@ def showNotice_cont(request, id):
     print(f"child_id: {id}")
 
     try:
+
+        # 한국 시간대
+        kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
-        today = datetime.now(timezone.utc)
+        today = datetime.now(kst)
         # 자정으로 초기화 + 타임존 유지
         start = today.replace(hour=0, minute=0, second=0, microsecond=0)
         end = start + timedelta(days=1)
+
+        querys = {
+            'child_id': id,
+            'date': start
+        }
+
+        cont = notice_collection.find_one(querys, {'content': 1, '_id': 0})
+        print(f"cont:", cont)
 
         query = {
             'child_id': id,
@@ -474,8 +484,6 @@ def showNotice_cont(request, id):
                 '$lt': end
             }
         }
-        cont = notice_collection.find_one(query, {'content': 1, '_id': 0})
-        print(f"cont:", cont)
 
         results_collection.find(query)
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
