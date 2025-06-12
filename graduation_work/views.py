@@ -412,28 +412,37 @@ def deleteChildren(request):
 # 선생님이 알림장 내용 작성해서 저장할 때 사용
 def writeNotice(request, teacher_id, classroom):
     if request.method == 'POST':      
-        content = request.POST.get('content')
-        child_id = request.POST.get('child_id') # 열려있는 알림장 주인(어린이 ID)
-        # 필수 데이터 확인
-        print(f"child_id: {child_id}, teacher_id: {teacher_id}, classroom: {classroom}, content: {content}")
-        if not content:
-            return JsonResponse({"error": "내용을 입력해주세요."}, status=400)
-        if not child_id or not teacher_id or not classroom:
-            return JsonResponse({"error": "필수 데이터가 누락되었습니다."}, status=400)
-        
-        child_doc = children_collection.find_one({"child_id": ObjectId(child_id)})    # 열린 알림장의 아이 정보 가져오기
-        kst = ZoneInfo("Asia/Seoul")
-        now_kst = datetime.now(kst)
-        notice = {
-            "child_id": child_doc.get("_id"),
-            "content": content,
-            "timestamp": now_kst,  # 현재 시간
-            "teacher_id": teacher_id,
-            "classroom": classroom
-        }
+        try:
+            content = request.POST.get('content')
+            child_id = request.POST.get('child_id')  # 열려있는 알림장 주인(어린이 ID)
 
-        notice_collection.insert_one(notice)
-        return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
+            print(f"child_id: {child_id}, teacher_id: {teacher_id}, classroom: {classroom}, content: {content}")
+
+            if not content:
+                return JsonResponse({"error": "내용을 입력해주세요."}, status=400)
+            if not child_id or not teacher_id or not classroom:
+                return JsonResponse({"error": "필수 데이터가 누락되었습니다."}, status=400)
+
+            child_doc = children_collection.find_one({"child_id": ObjectId(child_id)})
+            if child_doc is None:
+                raise ValueError("child_doc를 찾을 수 없습니다.")
+
+            kst = ZoneInfo("Asia/Seoul")
+            now_kst = datetime.now(kst)
+            notice = {
+                "child_id": child_doc.get("_id"),
+                "content": content,
+                "timestamp": now_kst,  # 현재 시간
+                "teacher_id": teacher_id,
+                "classroom": classroom
+            }
+
+            notice_collection.insert_one(notice)
+            return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
+
+        except Exception as e:
+            print(f"서버 에러 발생: {e}")  # 터미널에 에러 메시지 출력
+            raise
     return HttpResponseNotAllowed(['POST'])
 
 
