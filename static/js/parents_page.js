@@ -44,7 +44,7 @@ function closePop() {
 // 오늘의 하루 팝업 띄우기
 function openTodayPop(childName) {
     document.getElementById("today_popup_layer").style.display = "block";
-    document.querySelector("#popup_layer h3 .child-name").innerText = `-------${childName} 어린이-------`;
+    document.querySelector("#today_popup_layer h2").innerText = `${childName}의 하루`;
 }
 // 오늘의 하루 팝업 닫기
 function closeTodayPop() {
