@@ -425,7 +425,7 @@ def writeNotice(request, teacher_id, classroom):
             if not child_id or not teacher_id or not classroom:
                 return JsonResponse({"error": "필수 데이터가 누락되었습니다."}, status=400)
 
-            child_doc = children_collection.find_one({"child_id": ObjectId(child_id)})
+            child_doc = children_collection.find_one({"childId": ObjectId(child_id)})
             if child_doc is None:
                 raise ValueError("child_doc를 찾을 수 없습니다.")
 
