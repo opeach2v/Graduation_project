@@ -95,7 +95,7 @@
                     <div class="form-content">
                         {% comment %} <button class="x-btn" onclick="closeForm()">X</button> {% endcomment %}
                         <h3 style="padding: 15px; padding-top: 25px;">알림장 버튼을 먼저 눌러주세요</h3>
-                        <form id="writeNotice" method="POST" data-url="{% url 'writeNotice' teacher.id teacher.classroom %}">
+                        <form id="writeNotice" method="POST" data-url="{% url 'writeNotice' teachers.id teachers.classroom %}">
                             {% csrf_token %}
                             <textarea id="noticeContent" name="content" placeholder="전달할 내용:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
                             <button type="submit" id="writeNotice" class="save-btn">저장</button><br>
