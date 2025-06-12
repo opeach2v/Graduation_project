@@ -429,12 +429,12 @@ def writeNotice(request, teacher_id, classroom):
             if child_doc is None:
                 raise ValueError("child_doc를 찾을 수 없습니다.")
 
-            kst = ZoneInfo("Asia/Seoul")
-            now_kst = datetime.now(kst)
+            date = datetime.now()
+            format_date = datetime(date.year, date.month, date.day)
             notice = {
                 "child_id": child_doc.get("_id"),
                 "content": content,
-                "timestamp": now_kst,  # 현재 시간
+                "timestamp": format_date,  # 현재 시간
                 "teacher_id": teacher_id,
                 "classroom": classroom
             }
