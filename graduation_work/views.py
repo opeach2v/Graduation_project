@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
@@ -441,7 +443,7 @@ def writeNotice(request, teacher_id, classroom):
             return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
 
         except Exception as e:
-            print(f"서버 에러 발생: {e}")  # 터미널에 에러 메시지 출력
+            logger.error(f"서버 에러 발생: {e}", exc_info=True) # 로그 남기기
             raise
     return HttpResponseNotAllowed(['POST'])
 
