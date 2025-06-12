@@ -98,11 +98,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const content = document.getElementById("noticeContent").value;
       const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
       const url = form.dataset.url;  // form 요소의 data-url 속성 값 읽기
-      const encodedUrl = encodeURI(url);  // 또는 encodeURIComponent 부분만 인코딩
       
       console.log(`아이 ID: ${currentChildId}, ${url}`); // 디버깅용 로그
 
-      fetch(encodedUrl, {
+      fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
