@@ -400,7 +400,7 @@ def show_children(request):
         birthdate = doc.get("birthdate")
         parent_id = doc.get("parent_id")
         classroom = doc.get("classroom")
-        res.append({"childId": str(childId), "name": name, "birthdate": birthdate, "parent_id": parent_id, "classroom": classroom})
+        res.append({"childId": str(childId), "name": name, "birthdate": birthdate, "parent_id": str(parent_id), "classroom": classroom})
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
