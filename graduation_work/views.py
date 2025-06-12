@@ -557,13 +557,13 @@ def withdrawalUser(request, name):
             print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
 
             print(parent_id)
-            child_id = list(children_collection.find({'parent_id': ObjectId(parent_id)}, {"_id": 1}))
+            child_id = list(children_collection.find({'parent_id': parent_id}, {"_id": 1}))
             print(child_id)
             for ids in child_id:
-                ress = results_collection.delete_many({'child_id': ids['_id']})
+                ress = results_collection.delete_many({'child_id': ids})
                 print(f"{ids}의 ai 결과 컬렉션 삭제 결과: {ress.deleted_count}건 삭제됨")
 
-            delete_children = children_collection.delete_many({'parent_id': ObjectId(parent_id)})
+            delete_children = children_collection.delete_many({'parent_id': parent_id})
             print(f"학부모의 자녀 컬렉션 삭제 결과: {delete_children.deleted_count}건 삭제됨")
 
         elif teachers_collection.find_one({'name': name}):
