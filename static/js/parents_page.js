@@ -9,7 +9,7 @@ function openPop(childName, childId) {
                 document.querySelector("#popup_layer p").innerText = data.content;
                 console.log("data.content:", data.content);
             }
-            if (data.content == None) {
+            else {
                 document.querySelector("#popup_layer p").innerText = `아직 알림장이 작성되지 않았습니다😊`;
             }
             console.log("data.total_res:", data.total_res);
