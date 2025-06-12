@@ -4,21 +4,6 @@ let currentChildId = null;  // 현재 열려있는 알림장의 아이 ID (나�
 function openForm(childName, childId) {
   document.querySelector("#formArea .form-content h3").innerText = `${childName}의 알림장 내용 작성`;
   currentChildId = childId;  // 현재 열려있는 아이의 ID 저장
-
-  const container = document.getElementById('homeworkContainer');
-  const formArea = document.getElementById('formArea');
-  const formAreaLog = document.getElementById('formAreaLog');
-
-  container.classList.add('open');
-  formArea.style.width = '400px';
-  formArea.style.padding = '1px';      // 보여줄 때만 padding 추가
-  formArea.style.opacity = '1';
-  formArea.style.pointerEvents = 'auto';
-
-  formAreaLog.style.width = '0';
-  formAreaLog.style.padding = '0';      // 안 보이게 padding 제거
-  formAreaLog.style.opacity = '0';
-  formAreaLog.style.pointerEvents = 'none';
 };
 
 // 그동안 썼던 알림장 로그 form 열기

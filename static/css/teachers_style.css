@@ -85,31 +85,15 @@ body {
     height: 500px;
 }
 
-/* form이 열렸을 때 상태 */
-.homework-container.open .homework-list-box {
-    flex: 0 0 60%;
-}
-
-.homework-container.open .homework-box {
-    gap: 10px;
-}
-
-.homework-container.open .form-box {
-    width: 40%;
-    opacity: 1;
-    padding: 20px;
-    pointer-events: auto;
-}
-
 .homework-box {
     display: flex;
-    gap: 10px; /* 영역 사이 간격 */
+    gap: 15px; /* 영역 사이 간격 */
     background-color: #ffffff;
     padding: 25px;
     border-radius: 15px;
     width: 100%;
-    margin: 0 auto;
     align-items: center;
+    height: 450px;
 }
 
 .homework-list-box {
@@ -127,8 +111,6 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    pointer-events: auto;
 }
 
 /* 폼 내용 영역 */
@@ -137,7 +119,7 @@ body {
     text-align: center;
 }
 
-.x-btn {
+/* .x-btn {
     float: right;
     background-color: transparent;
     border: none;
@@ -147,11 +129,11 @@ body {
     padding-right: 5px;
     cursor: pointer;
     text-decoration: none;
-}
+} */
 
-.x-btn:hover {
+/* .x-btn:hover {
     color: rgb(247, 51, 51);
-}
+} */
 
 textarea {
     width: 90%;
