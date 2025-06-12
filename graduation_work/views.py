@@ -81,8 +81,6 @@ def add_users(request):
                     "classroom": classroom
                 })
 
-            # 성공 메시지와 함께 로그인 페이지로 이동
-            messages.success(request, f"{name} 님, 회원가입이 완료되었습니다. 로그인 해주세요!")
             return redirect('login_user')  # 회원가입 후 로그인 페이지로 리다이렉션
         except Exception as e:
             return JsonResponse({"signup error" : str(e)}, status=500)
