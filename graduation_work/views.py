@@ -414,6 +414,8 @@ def writeNotice(request, teacher_id, classroom):
     if request.method == 'POST':      
         content = request.POST.get('content')
         child_id = request.POST.get('child_id') # 열려있는 알림장 주인(어린이 ID)
+        # 필수 데이터 확인
+        print(f"child_id: {child_id}, teacher_id: {teacher_id}, classroom: {classroom}, content: {content}")
         if not content:
             return JsonResponse({"error": "내용을 입력해주세요."}, status=400)
         if not child_id or not teacher_id or not classroom:
