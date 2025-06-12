@@ -103,7 +103,7 @@ body {
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    height: 100%;  /* 부모 요소와 비슷한 크기로 */
+    height: 430px;
     box-sizing: border-box;
 }
 
