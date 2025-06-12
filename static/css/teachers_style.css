@@ -32,8 +32,8 @@ body {
     list-style: none;
     display: flex;
     gap: 20px;
-  }
-  
+}
+
 .header-nav a {
     text-decoration: none;
     color: #333;
@@ -41,7 +41,7 @@ body {
     font-weight: bold;
     margin-right: 15px;
 }
-  
+
 .header-nav a:hover {
     text-decoration: underline;
 }
@@ -102,7 +102,6 @@ body {
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* 내용이 길면 스크롤 */
     height: 100%;  /* 부모 요소와 비슷한 크기로 */
 }
 
