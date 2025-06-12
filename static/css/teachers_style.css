@@ -129,7 +129,7 @@ body {
     display: flex;
     justify-content: center;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 7px;
     width: 90%;
     height: 450px;
 }
@@ -144,6 +144,7 @@ body {
     align-items: center;
     height: auto;
     min-height: 430px;
+    text-align: center;
 }
 
 /* .x-btn {
@@ -157,7 +158,6 @@ body {
     cursor: pointer;
     text-decoration: none;
 } */
-
 /* .x-btn:hover {
     color: rgb(247, 51, 51);
 } */
