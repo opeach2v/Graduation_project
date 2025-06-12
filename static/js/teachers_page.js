@@ -169,7 +169,7 @@ new Chart(document.getElementById("doughnut-chart"), {
   options: {
     title: {
       display: true,
-      text: 'Predicted world population (millions) in 2050'
+      text: '반 전체 위험도 분석 (건)'
     }
   }
 });
