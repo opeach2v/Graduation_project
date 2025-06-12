@@ -39,4 +39,5 @@ urlpatterns = [
     path('removeparents/', views.deleteParents, name='deleteParents'),
     path('removeteachers/', views.deleteTeachers, name='deleteTeachers'),
     path('removechildren/', views.deleteChildren, name='deleteChildren'),
+    path('removenotice/', views.deleteNotice, name='deleteNotice'),
 ]

@@ -449,6 +449,10 @@ def writeNotice(request, teacher_id, classroom):
             return JsonResponse({"error": "서버 오류가 발생했습니다. 관리자에게 문의하세요."}, status=500)
     return HttpResponseNotAllowed(['POST'])
 
+# 알림장 내용 전체 삭제 ..
+def deleteNotice(request):
+    res = notice_collection.delete_many({})
+    return HttpResponse(f"{res.deleted_count} documents deleted from 'actions'")
 
 # 학부모가 알림장 내용 확인할 때 (알림장 내용과 위험 행동분석 결과 다 들고 오기)
 def showNotice_cont(request, id):
