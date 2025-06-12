@@ -87,6 +87,7 @@ body {
 
 .homework-box {
     display: flex;
+    gap: 15px; /* 영역 사이 간격 */
     background-color: #ffffff;
     padding: 25px;
     border-radius: 15px;
