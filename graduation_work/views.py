@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotAllowed, JsonResponse, HttpResponse
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -278,13 +278,14 @@ def input_results(request):
             kst = pytz.timezone('Asia/Seoul')
             dt = datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S")  # naive datetime
             dt_kst = kst.localize(dt)  # KST timezone-aware datetime
+            utc_dt = dt_kst.astimezone(pytz.utc)  # UTC로 변환
 
             # 데이터 생성
             data = {
                 "child_id": child_id,
                 "event_type": event_type,
                 "confidence": confidence,
-                "timestamp": dt_kst
+                "timestamp": utc_dt
             }
 
             # mongoDB에 저장
@@ -429,7 +430,7 @@ def writeNotice(request, teacher_id, classroom):
             if child_doc is None:
                 raise ValueError("child_doc를 찾을 수 없습니다.")
 
-            date = datetime.now()
+            date = datetime.now(timezone.utc)
             format_date = datetime(date.year, date.month, date.day)
             notice = {
                 "child_id": child_doc.get("_id"),
@@ -460,10 +461,8 @@ def showNotice_cont(request, id):
     print(f"child_id: {id}")
 
     try:
-        # 한국 시간대
-        kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
-        today = datetime.now(kst)
+        today = datetime.now(timezone.utc)
         # 자정으로 초기화 + 타임존 유지
         start = today.replace(hour=0, minute=0, second=0, microsecond=0)
         end = start + timedelta(days=1)
