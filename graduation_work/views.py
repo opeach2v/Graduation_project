@@ -582,11 +582,11 @@ def withdrawalUser(request, name):
 def show_content(request):
     res = []
     for doc in notice_collection.find({}):
-        childId = doc.get("_id")
+        child_id = doc.get("child_id")
         content = doc.get("content")
         date = doc.get("date")
         teacher_id = doc.get("teacher_id")
         classroom = doc.get("classroom")
-        res.append({"childId": str(childId), "content": content, "date": date, "teacher_id": str(teacher_id), "classroom": classroom})
+        res.append({"childId": str(child_id), "content": content, "date": date, "teacher_id": str(teacher_id), "classroom": classroom})
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
