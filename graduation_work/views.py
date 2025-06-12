@@ -432,7 +432,7 @@ def writeNotice(request, teacher_id, classroom):
             date = datetime.now(timezone.utc)
             format_date = datetime(date.year, date.month, date.day)
             notice = {
-                "child_id": child_doc.get("_id"),
+                "child_id": child_id,
                 "content": content,
                 "date": format_date,  # 현재 시간
                 "teacher_id": teacher_id,
