@@ -375,7 +375,7 @@ def add_child(request):
         data = {
             "name": child_name,
             "birthdate": format_birthdate,
-            "parent_id": parent_id,
+            "parent_id": ObjectId(parent_id),
             "classroom": classroom
         }
 
