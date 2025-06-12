@@ -544,3 +544,17 @@ def withdrawalUser(request, name):
         # 로그아웃 처리
         logout(request)
         return redirect('login_user')
+    
+
+# 이건 내가 알림장 내용 확인 하는 거
+def show_content(request):
+    res = []
+    for doc in notice_collection.find({}):
+        childId = doc.get("_id")
+        content = doc.get("content")
+        date = doc.get("date")
+        teacher_id = doc.get("teacher_id")
+        classroom = doc.get("classroom")
+        res.append({"childId": str(childId), "content": content, "date": date, "teacher_id": teacher_id, "classroom": classroom})
+    
+    return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
