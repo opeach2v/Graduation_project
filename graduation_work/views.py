@@ -1,5 +1,5 @@
 import logging
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('graduation_work')
 from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect

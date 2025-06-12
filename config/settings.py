@@ -156,3 +156,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 기본 DB 세션
 
 SEESION_COOKIE_AGE = 3600   # 세션 만료 시간 1시간
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'graduation_work': {
+            'handlers': ['console'],
+            'level': 'ERROR',   # ERROR 이상만 출력 (INFO, DEBUG는 안 뜸)
+            'propagate': False,
+        },
+    },
+}
