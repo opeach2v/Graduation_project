@@ -475,7 +475,7 @@ def showNotice_cont(request, id):
         }
         notice_doc = notice_collection.fine_one({'child_id': id})
         cont = notice_collection.find_one(querys, {'content': 1, '_id': 0})
-        prinnt(notice_doc)
+        print(notice_doc)
         print(f"query:", querys)
         print(f"cont:", cont)
 
