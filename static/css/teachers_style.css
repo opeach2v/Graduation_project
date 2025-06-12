@@ -114,12 +114,36 @@ body {
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+    margin-right: 5px;
 }
 
 /* 폼 내용 영역 */
 .form-box .form-content {
     padding: 20px;
     text-align: center;
+}
+
+
+/* 분석결과 컨테이너 */
+.result-container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    width: 90%;
+    height: 450px;
+}
+
+.result-box {
+    display: flex;
+    gap: 15px; /* 영역 사이 간격 */
+    background-color: #fffee2;
+    padding: 25px;
+    border-radius: 15px;
+    width: 100%;
+    align-items: center;
+    height: auto;
+    min-height: 430px;
 }
 
 /* .x-btn {

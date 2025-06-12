@@ -37,7 +37,7 @@
                 <a href=".">    <!-- 이미지 누르면 새로고침 되는.. -->
                     <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
                 <h1 style="font-size: 32px; padding-left: 15px;">
-                    {% if teachers.classroom == "lion" %}사자반🦁
+                    {% if teachers.classroom == "lion" %}사자반<img src="{{ MEDIA_URL }}lion.png" alt="사자" style="height: 40px;">
                     {% elif teachers.classroom == "tiger" %}호랑이반🐯
                     {% else %}곰반🐻
                     {% endif %}
