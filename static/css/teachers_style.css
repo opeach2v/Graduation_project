@@ -147,6 +147,11 @@ body {
     text-align: center;
 }
 
+.doughnut-box {
+    width: 400px;
+    
+}
+
 /* .x-btn {
     float: right;
     background-color: transparent;
