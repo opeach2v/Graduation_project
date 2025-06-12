@@ -8,6 +8,7 @@ function openPop(childName, childId) {
             if (data.content) { // 값이 있을 때만
                 document.querySelector(".popup_cont p").innerText = data.content;
             }
+            console.log("data.content:", data.content);
             console.log("data.total_res:", data.total_res);
 
             document.querySelector("#totalRes").innerText = `* 오늘의 행동 감지: ${data.total_res}건`;
