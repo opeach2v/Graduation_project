@@ -22,11 +22,6 @@
 <body>
     {% block asd %}
     {% endblock %}
-    {% if messages %}
-    <script>
-        alert("이미 존재하는 아이디입니다.");
-    </script>
-    {% endif %}
     <script src="{% static 'js/register.js' %}"></script>
     <main class="main-container">
         <section class="create-container">
@@ -68,5 +63,10 @@
             </div>
         </section>
     </main>
+    {% if messages %}
+    <script>
+        alert("이미 존재하는 아이디입니다.");
+    </script>
+    {% endif %}
 </body>
 </html>
