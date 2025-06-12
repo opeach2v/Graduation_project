@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const url = form.dataset.url;  // form 요소의 data-url 속성 값 읽기
       const encodedUrl = encodeURI(url);  // 또는 encodeURIComponent 부분만 인코딩
 
-      fetch(url, {
+      fetch(encodedUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
