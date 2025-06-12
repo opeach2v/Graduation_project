@@ -31,13 +31,13 @@
     {% block asd %}
     {% endblock %}
     <!-- 메인 영역 -->
-    <main class="main-container">
+    < class="main-container">
         <header class="site-header">
             <div class="logo-area">
                 <a href=".">    <!-- 이미지 누르면 새로고침 되는.. -->
                     <img src="{{ MEDIA_URL }}webLogo.png" alt="로고" class="logo-img"></a>
                 <h1 style="font-size: 32px; padding-left: 15px;">
-                    {% if teachers.classroom == "lion" %}사자반<img src="{{ MEDIA_URL }}lion.png" alt="사자" style="height: 40px;">
+                    {% if teachers.classroom == "lion" %}사자반🦁
                     {% elif teachers.classroom == "tiger" %}호랑이반🐯
                     {% else %}곰반🐻
                     {% endif %}
@@ -108,6 +108,11 @@
                         <!-- 여기에 JS로 로그 내용 추가됨 -->
                     </div>
                 </div> {% endcomment %}
+            </div>
+        </section>
+        <section class="result-container" id="resultContainer">
+            <div class="result-box">
+                안녕
             </div>
         </section>
     </main>
