@@ -98,7 +98,7 @@
                         <form id="writeNotice" method="POST">
                             {% csrf_token %}
                             <textarea id="noticeContent" name="content" placeholder="전달할 내용:&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;*준비물:"></textarea>
-                            <button type="submit" class="save-btn">저장</button><br>
+                            <button type="submit" id="writeNotice" class="save-btn">저장</button><br>
                             <button class="delete-btn" onclick="javascript:clearForm()">전체 내용 삭제</button> <!-- 이건 그냥 textarea 내용만 지우는 거임 -->
                         </form>
                     </div>
