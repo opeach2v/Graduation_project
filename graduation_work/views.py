@@ -443,8 +443,8 @@ def writeNotice(request, teacher_id, classroom):
             return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
 
         except Exception as e:
-            logger.error(f"서버 에러 발생: {e}", exc_info=True) # 로그 남기기
-            raise
+            logger.error(f"서버 에러 발생: {e}", exc_info=True)
+            return JsonResponse({"error": "서버 오류가 발생했습니다. 관리자에게 문의하세요."}, status=500)
     return HttpResponseNotAllowed(['POST'])
 
 
