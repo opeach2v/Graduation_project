@@ -416,8 +416,10 @@ def writeNotice(request, teacher_id, classroom):
         child_id = request.POST.get('child_id') # 열려있는 알림장 주인(어린이 ID)
         if not content:
             return JsonResponse({"error": "내용을 입력해주세요."}, status=400)
+        if not child_id or not teacher_id or not classroom:
+            return JsonResponse({"error": "필수 데이터가 누락되었습니다."}, status=400)
         
-        child_doc = children_collection.find_one({"child_id": child_id})    # 열린 알림장의 아이 정보 가져오기
+        child_doc = children_collection.find_one({"child_id": ObjectId(child_id)})    # 열린 알림장의 아이 정보 가져오기
         kst = ZoneInfo("Asia/Seoul")
         now_kst = datetime.now(kst)
         notice = {
