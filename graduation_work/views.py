@@ -1,7 +1,7 @@
 from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponseNotAllowed, JsonResponse, HttpResponse
 from datetime import date, datetime, timedelta
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
@@ -434,6 +434,7 @@ def writeNotice(request, teacher_id, classroom):
 
         notice_collection.insert_one(notice)
         return JsonResponse({"message": "알림장 내용이 저장되었습니다."}, status=201)
+    return HttpResponseNotAllowed(['POST'])
 
 
 # 학부모가 알림장 내용 확인할 때 (알림장 내용과 위험 행동분석 결과 다 들고 오기)
