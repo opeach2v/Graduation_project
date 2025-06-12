@@ -2,7 +2,7 @@
 let currentChildId = null;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
 
 function openForm(childName, childId) {
-  document.querySelector("#popup_layer h3").innerText = `${childName}의 알림장 내용 작성`;
+  document.querySelector("#form-box h3").innerText = `${childName}의 알림장 내용 작성`;
   currentChildId = childId;  // 현재 열려있는 아이의 ID 저장
 
   const container = document.getElementById('homeworkContainer');
@@ -42,8 +42,6 @@ function openLogForm(teacher_id) {
   fetch(`/api/notice_logs/${teacher_id}/`)
     .then(res => res.json())
     .then(data => {
-      const container = document.querySelector("#formAreaLog .form-content"); 
-
       if (data.notices.length === 0) {
         const empty = document.createElement("div");
         empty.textContent = "지금까지 작성된 알림장이 없습니다.";
