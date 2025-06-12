@@ -460,7 +460,6 @@ def showNotice_cont(request, id):
     print(f"child_id: {id}")
 
     try:
-
         # 한국 시간대
         kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
@@ -471,7 +470,7 @@ def showNotice_cont(request, id):
 
         querys = {
             'child_id': id,
-            'date': start
+            'date': start.replace(tzinfo=None)
         }
         notice_doc = notice_collection.find_one({'child_id': id})
         cont = notice_collection.find_one(querys, {'content': 1, '_id': 0})
