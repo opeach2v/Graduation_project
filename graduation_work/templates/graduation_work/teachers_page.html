@@ -31,10 +31,6 @@
     {% block asd %}
     {% endblock %}
     <!-- 메인 영역 -->
-    <!-- Django에서만 작동 -->
-    <script src="{% static 'js/teachers_page.js' %}"></script>
-    <!-- live server에서만 작동 -->
-    <script src="../static/js/teachers_page.js"></script>
     <main class="main-container">
         <header class="site-header">
             <div class="logo-area">
@@ -115,5 +111,9 @@
             </div>
         </section>
     </main>
+    <!-- Django에서만 작동 -->
+    <script src="{% static 'js/teachers_page.js' %}"></script>
+    <!-- live server에서만 작동 -->
+    <script src="../static/js/teachers_page.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 // 개인 알림장 열기
-let currentChildId = null;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
+let currentChildId;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
 
 function openForm(childName, childId) {
   document.querySelector("#formArea .form-content h3").innerText = `${childName}의 알림장 내용 작성`;
@@ -88,37 +88,44 @@ function closeForm() {
 }
 
 // 개인 알림장 내용 저장 (AJAX)
-document.getElementById("writeNotice").addEventListener("submit", function(e) {
-  e.preventDefault(); // 폼 기본 동작(페이지 이동) 막기
-  console.log(`아이 ID: ${currentChildId}`) // 디버깅용 로그;
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("writeNotice");
+  if (form) {
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); // 폼 기본 동작(페이지 이동) 막기
 
-  const content = document.getElementById("noticeContent").value;
-  const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-  const url = form.dataset.url;
+      console.log(`아이 ID: ${currentChildId}`); // 디버깅용 로그
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "X-CSRFToken": csrfToken
-    },
-    body: new URLSearchParams({ 
-      content : content,
-      child_id: currentChildId  // 현재 열려있는 아이의 ID 전달
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error) {
-      alert("데이터 에러" + data.error);
-    } else {
-      alert("저장되었습니다!");
-    }
-  })
-  .catch(err => {
-    alert("저장 중 오류 발생");
-    console.error(err);
-  });
+      const content = document.getElementById("noticeContent").value;
+      const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+      const url = form.dataset.url;  // form 요소의 data-url 속성 값 읽기
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": csrfToken
+        },
+        body: new URLSearchParams({ 
+          content : content,
+          child_id: currentChildId  // 현재 열려있는 아이의 ID 전달
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert("데이터 에러" + data.error);
+        } else {
+          alert("저장되었습니다!");
+          form.querySelector('textarea').value = '';  // 저장 후 textarea 초기화
+        }
+      })
+      .catch(err => {
+        alert("저장 중 오류 발생");
+        console.error(err);
+      });
+    });
+  }
 });
 
 // 개인 알림장 내용 삭제(textarea 비우기)
