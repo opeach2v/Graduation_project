@@ -99,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const content = document.getElementById("noticeContent").value;
       const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
       const url = form.dataset.url;  // form 요소의 data-url 속성 값 읽기
+      const encodedUrl = encodeURI(url);  // 또는 encodeURIComponent 부분만 인코딩
 
       fetch(url, {
         method: "POST",
@@ -111,7 +112,13 @@ document.addEventListener("DOMContentLoaded", function () {
           child_id: currentChildId  // 현재 열려있는 아이의 ID 전달
         })
       })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          // 응답 상태가 200 OK가 아니면
+          throw new Error(`서버 오류: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         if (data.error) {
           alert("데이터 에러" + data.error);
@@ -121,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       })
       .catch(err => {
-        alert("저장 중 오류 발생");
+        alert(`저장 중 오류 발생: ${err.message}`);
         console.error(err);
       });
     });
