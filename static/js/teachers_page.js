@@ -152,3 +152,24 @@ window.onload = function() {
   window.onpopstate = function () {
     window.history.pushState(null, "", window.location.href);
   };
+
+// 그래프
+new Chart(document.getElementById("doughnut-chart"), {
+  type: 'doughnut',
+  data: {
+    labels: ["Standing", "Walking", "Running", "Sitting", "Playing", "Fighting", "fall down"],
+    datasets: [
+      {
+        label: "event",
+        backgroundColor: ["#94d2bb", "#099396","#00304e","#d62827","#f58000", "#ffb504", "#748494"],
+        data: [142,200,102,86,211,43,29]
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: 'Predicted world population (millions) in 2050'
+    }
+  }
+});

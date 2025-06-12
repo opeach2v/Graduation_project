@@ -137,7 +137,7 @@ body {
 .result-box {
     display: flex;
     gap: 15px; /* 영역 사이 간격 */
-    background-color: #fffee2;
+    background-color: #fffeee;
     padding: 25px;
     border-radius: 15px;
     width: 100%;
