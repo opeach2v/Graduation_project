@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/showNotice_cont/<str:id>/', views.showNotice_cont, name='showNotice_cont'),
     path('show_content/', views.show_content, name='show_content'),    # 알림장 내용 확인 페이지(내가 확인하는 거 )
     # 알림장 쓰기
-    path('api/writeNotice/<str:id>/<str:classroom>/', views.writeNotice, name='writeNotice'),
+    path('api/writeNotice/<str:teacher_id>/<str:classroom>/', views.writeNotice, name='writeNotice'),
     # 알림장 모든 내용 가져오기
     path('api/get_notice_logs/<str:id>/', views.get_notice_logs, name='get_notice_logs'),
 
