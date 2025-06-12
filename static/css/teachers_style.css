@@ -101,40 +101,33 @@ body {
     pointer-events: auto;
 }
 
-/* 폼 열리기 전 gap 0 */
 .homework-box {
-    display: flex; /* 가로로 정렬되도록 설정 */
-    gap: 0;
+    display: flex;
+    gap: 20px; /* 영역 사이 간격 */
     background-color: #ffffff;
     padding: 25px;
     border-radius: 15px;
     width: 100%;
-    transition: all 0.3s ease;
     margin: 0 auto;
 }
 
-/* 왼쪽에 동적으로 줄어들 테이블 영역 */
 .homework-list-box {
-    flex: 1;
-    transition: all 0.3s ease;
+    flex: 0 0 70%; /* 너비 고정: 70% */
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    width: 90%;
+    overflow-y: auto; /* 내용이 길면 스크롤 */
 }
 
-/* 오른쪽에 동적으로 생길 폼 영역 - 초기에는 숨김 */
 .form-box {
-    width: 0;
-    padding: 0;
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    flex: 0 0 30%; /* 너비 고정: 30% */
     background-color: #f9f9f9;
+    padding: 20px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 /* 폼 내용 영역 */
