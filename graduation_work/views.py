@@ -557,7 +557,7 @@ def withdrawalUser(request, name):
             print(f"학부모 컬렉션 삭제 결과: {delete_parent.deleted_count}건 삭제됨")
 
             print(parent_id)
-            child_id = list(children_collection.find({'parent_id': ObjectId(parent_id)}))
+            child_id = list(children_collection.find({'parent_id': ObjectId(parent_id)}, {"_id": 1}))
             print(child_id)
             for ids in child_id:
                 ress = results_collection.delete_many({'child_id': ids['_id']})
