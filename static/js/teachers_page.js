@@ -90,11 +90,13 @@ function closeForm() {
 // 개인 알림장 내용 저장 (AJAX)
 document.getElementById("writeNotice").addEventListener("submit", function(e) {
   e.preventDefault(); // 폼 기본 동작(페이지 이동) 막기
+  console.log(`아이 ID: ${currentChildId}`) // 디버깅용 로그;
 
   const content = document.getElementById("noticeContent").value;
   const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+  const url = form.dataset.url;
 
-  fetch("{% url 'writeNotice' teacher.id teacher.classroom %}", {
+  fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
