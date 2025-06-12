@@ -103,16 +103,17 @@ body {
 
 .homework-box {
     display: flex;
-    gap: 20px; /* 영역 사이 간격 */
+    gap: 10px; /* 영역 사이 간격 */
     background-color: #ffffff;
     padding: 25px;
     border-radius: 15px;
     width: 100%;
     margin: 0 auto;
+    align-items: center;
 }
 
 .homework-list-box {
-    flex: 0 0 70%; /* 너비 고정: 70% */
+    flex: 0 0 60%; /* 너비 고정: 70% */
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 15px;
@@ -121,7 +122,7 @@ body {
 }
 
 .form-box {
-    flex: 0 0 30%; /* 너비 고정: 30% */
+    flex: 0 0 40%; /* 너비 고정: 30% */
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 15px;
