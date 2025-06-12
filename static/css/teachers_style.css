@@ -87,13 +87,13 @@ body {
 
 .homework-box {
     display: flex;
-    gap: 15px; /* 영역 사이 간격 */
     background-color: #ffffff;
     padding: 25px;
     border-radius: 15px;
     width: 100%;
     align-items: center;
-    height: 450px;
+    height: auto;
+    min-height: 450px;
 }
 
 .homework-list-box {
@@ -103,6 +103,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     height: 100%;  /* 부모 요소와 비슷한 크기로 */
+    box-sizing: border-box;
 }
 
 .form-box {
@@ -111,6 +112,7 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 /* 폼 내용 영역 */
