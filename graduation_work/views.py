@@ -434,7 +434,7 @@ def writeNotice(request, teacher_id, classroom):
             notice = {
                 "child_id": child_doc.get("_id"),
                 "content": content,
-                "timestamp": format_date,  # 현재 시간
+                "date": format_date,  # 현재 시간
                 "teacher_id": teacher_id,
                 "classroom": classroom
             }
