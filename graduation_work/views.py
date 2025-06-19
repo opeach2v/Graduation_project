@@ -592,7 +592,7 @@ def show_content(request):
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
-# 그래프 그릴 때 값 가져오기
+# 그래프 그릴 때 값 가져오기(라벨 수정함)
 def chart_data(request):
     labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
     result = {label: 0 for label in labels}
