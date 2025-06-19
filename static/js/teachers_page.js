@@ -153,7 +153,7 @@ window.onload = function() {
     window.history.pushState(null, "", window.location.href);
   };
 
-// 그래프
+// 그래프 동적으로 그리기
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/chart-data/')
     .then(response => response.json())

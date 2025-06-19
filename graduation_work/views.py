@@ -604,5 +604,5 @@ def chart_data(request):
 
     return JsonResponse({
         "labels": labels,
-        "data": [result[label] for label in labels]
+        "data": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
     })
