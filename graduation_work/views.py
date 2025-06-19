@@ -591,3 +591,18 @@ def show_content(request):
         res.append({"childId": str(child_id), "content": content, "date": date, "teacher_id": str(teacher_id), "classroom": classroom})
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
+
+# 그래프 그릴 때 값 가져오기
+def chart_data(request):
+    labels = ["Standing", "Walking", "Running", "Sitting", "Playing", "Fighting", "fall down"]
+    result = {label: 0 for label in labels}
+
+    for doc in results_collection.find():
+        event_type = doc.get("event_type")
+        if event_type in result:
+            result[event_type] += 1
+
+    return JsonResponse({
+        "labels": labels,
+        "data": [result[label] for label in labels]
+    })

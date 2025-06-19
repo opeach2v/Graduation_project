@@ -154,22 +154,32 @@ window.onload = function() {
   };
 
 // 그래프
-new Chart(document.getElementById("doughnut-chart"), {
-  type: 'doughnut',
-  data: {
-    labels: ["Standing", "Walking", "Running", "Sitting", "Playing", "Fighting", "fall down"],
-    datasets: [
-      {
-        label: "event",
-        backgroundColor: ["#94d2bb", "#099396","#00304e","#d62827","#f58000", "#ffb504", "#748494"],
-        data: [142,200,102,86,211,43,29]
-      }
-    ]
-  },
-  options: {
-    title: {
-      display: true,
-      text: '반 전체 위험도 분석 (건)'
-    }
-  }
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('/chart-data/')
+    .then(response => response.json())
+    .then(chartInfo => {
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: chartInfo.labels,
+          datasets: [{
+            label: "event",
+            backgroundColor: [
+              "#94d2bb", "#099396", "#00304e",
+              "#d62827", "#f58000", "#ffb504", "#748494"
+            ],
+            data: chartInfo.data
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: '반 전체 위험도 분석 (건)'
+          }
+        }
+      });
+    })
+    .catch(error => {
+      console.error("차트 데이터를 불러오는 중 오류 발생:", error);
+    });
 });
