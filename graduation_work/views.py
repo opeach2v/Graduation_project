@@ -594,7 +594,7 @@ def show_content(request):
 
 # 그래프 그릴 때 값 가져오기
 def chart_data(request):
-    labels = ["Standing", "Walking", "Running", "Sitting", "Playing", "Fighting", "fall down"]
+    labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
     result = {label: 0 for label in labels}
 
     for doc in results_collection.find():
