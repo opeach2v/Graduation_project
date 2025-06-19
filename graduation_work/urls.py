@@ -28,6 +28,8 @@ urlpatterns = [
     path('show_parents/', views.showParents, name='showParent'),    # 찐 학부모 페이지
     path('showparents/', views.show_parents),
 
+    path('chart-data/', views.chart_data, name='chart_data'),
+
     path('show_teachers/', views.showTeachers),
 
     path('addresult/', views.input_results, name='input_results'),  # 임시로 만든 거
