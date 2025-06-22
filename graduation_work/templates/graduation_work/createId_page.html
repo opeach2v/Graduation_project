@@ -5,11 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Django에서만 작동 -->
-    <link rel="icon" href="{% static 'media/webLogo.png' %}">
-    <link rel="apple-touch-icon" href="{% static 'media/webLogo.png' %}">
-    <!-- live server에서만 작동 -->
-    <link rel="icon" href="../media/webLogo.png">
-    <link rel="apple-touch-icon" href="../media/webLogo.png">
+    <link rel="icon" href="{{ MEDIA_URL }}webLogo.png">
+    <link rel="apple-touch-icon" href="{{ MEDIA_URL }}webLogo.png">
     <!-- Django에서만 작동 -->
     <link rel="stylesheet" href="{% static 'css/createId_style.css' %}">
     <!-- live server에서만 작동 -->
