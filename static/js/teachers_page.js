@@ -174,7 +174,9 @@ document.addEventListener('DOMContentLoaded', function () {
               label: "event",
               backgroundColor: [
                 "#94d2bb", "#099396", "#00304e",
-                "#d62827", "#f58000", "#ffb504", "#748494"
+                "#d62827", "#f58000", "#ffb504", "#748494",
+                "#f3e9d2", "#6a4c93", "#ffcbf2", "#8ecae6", 
+                "#c9ada7", "#e0fbfc"
               ],
               data: chartInfo.data
             }]
@@ -219,7 +221,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
+                'rgba(201, 203, 207, 0.2)',
+                'rgba(255, 153, 255, 0.2)',
+                'rgba(255, 233, 102, 0.2)',
+                'rgba(102, 255, 204, 0.2)',
+                'rgba(204, 153, 255, 0.2)',
+                'rgba(255, 102, 153, 0.2)',
+                'rgba(102, 204, 255, 0.2)'
               ],
               borderColor: [
                 'rgb(255, 99, 132)',
@@ -228,7 +236,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 'rgb(75, 192, 192)',
                 'rgb(54, 162, 235)',
                 'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
+                'rgb(201, 203, 207)',
+                'rgb(255, 153, 255)',
+                'rgb(255, 233, 102)',
+                'rgb(102, 255, 204)',
+                'rgb(204, 153, 255)',
+                'rgb(255, 102, 153)',
+                'rgb(102, 204, 255)'
               ],
               data: chartInfo.todayData
             }]
