@@ -149,7 +149,20 @@ body {
 }
 
 .doughnut-box {
-    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    background-color: #ffffff;
+    height: 350px;
+    border-radius: 15px;
+}
+
+.doughnut-box p {
+  text-align: center;
+  font-size: 18px;
+  color: #444;
+  padding: 10px;
 }
 
 .bar-box {
