@@ -500,9 +500,7 @@ def showNotice_cont(request, id):
                         "listening_to_music",
                         "running",
                         "sitting",
-                        "sleeping",
-                        "texting",
-                        "using_laptop"]
+                        "sleeping"]
         event_counts = {event: 0 for event in ALL_EVENTS}
 
         for doc in results_collection.find(query):
@@ -620,9 +618,7 @@ def chart_data(request):
                 "listening_to_music",
                 "running",
                 "sitting",
-                "sleeping",
-                "texting",
-                "using_laptop"]
+                "sleeping"]
     result = {label: 0 for label in labels}
 
     for doc in results_collection.find():
@@ -649,9 +645,7 @@ def today_chart_data(request):
                 "listening_to_music",
                 "running",
                 "sitting",
-                "sleeping",
-                "texting",
-                "using_laptop"]
+                "sleeping"]
     result = {label: 0 for label in labels}
 
     today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
