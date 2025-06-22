@@ -13,17 +13,24 @@
                 <label for="child_id">아동 ID: </label>
                 <input type="text" id="child_id" name="child_id"><br>
                 <label for="event_type">감지된 행동: </label><br>
-                <input type="radio" id="standing" name="action" value="standing"><label for="standing">standing</label>
-                <input type="radio" id="walking" name="action" value="walking"><label for="walking">walking</label>
-                <input type="radio" id="running" name="action" value="running"><label for="running">running</label>
-                <input type="radio" id="sitting" name="action" value="sitting"><label for="sitting">sitting</label><br>
-                <input type="radio" id="playing" name="action" value="playing"><label for="playing">playing</label>
+                <input type="radio" id="calling" name="action" value="calling"><label for="calling">calling</label>
+                <input type="radio" id="clapping" name="action" value="clapping"><label for="clapping">clapping</label>
+                <input type="radio" id="cycling" name="action" value="cycling"><label for="cycling">cycling</label>
+                <input type="radio" id="dancing" name="action" value="dancing"><label for="dancing">dancing</label><br>
+                <input type="radio" id="drinking" name="action" value="drinking"><label for="drinking">drinking</label>
+                <input type="radio" id="eating" name="action" value="eating"><label for="eating">eating</label>
                 <input type="radio" id="fighting" name="action" value="fighting"><label for="fighting">fighting</label>
-                <input type="radio" id="falldown" name="action" value="falldown"><label for="falldown">falldown</label>
+                <input type="radio" id="hugging" name="action" value="hugging"><label for="hugging">hugging</label>
+                <input type="radio" id="dancing" name="action" value="dancing"><label for="dancing">dancing</label><br>
+                <input type="radio" id="laughing" name="action" value="laughing"><label for="laughing">laughing</label>
+                <input type="radio" id="listening_to_music" name="action" value="listening_to_music"><label for="listening_to_musiceating">listening_to_music</label>
+                <input type="radio" id="running" name="action" value="running"><label for="running">running</label>
+                <input type="radio" id="sitting" name="action" value="sitting"><label for="sitting">sitting</label>
+                <input type="radio" id="sleeping" name="action" value="sleeping"><label for="sleeping">sleeping</label>
                 
                 <br>
-                <label for="confidence">인식 신뢰도: </label>
-                <input type="range" min="0" max="100" id="confidence" name="confidence"><br>
+                <label for="filename">파일 이름: </label>
+                <input type="text" id="filename" name="filename" value="100번파일">100번파일<br>
                 <label for="timestamp">감지 시간: </label>
                 <input type="datetime-local" step="1" id="timestamp" name="timestamp"><br><br>
                 <input type="submit" value="저장">
