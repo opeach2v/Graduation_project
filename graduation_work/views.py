@@ -467,11 +467,11 @@ def showNotice_cont(request, id):
         today = datetime.now(kst)
         # 자정으로 초기화 + 타임존 유지
         start = today.replace(hour=0, minute=0, second=0, microsecond=0)
-        end = start + timedelta(days=1)
+        end = (start + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
 
         # UTC 기준으로 변환
         start_utc = today.astimezone(pytz.utc)
-        end_utc = (today + timedelta(days=1)).astimezone(pytz.utc)
+        end_utc = end.astimezone(pytz.utc)
 
         querys = {
             'child_id': id,
