@@ -488,7 +488,21 @@ def showNotice_cont(request, id):
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
 
-        ALL_EVENTS = ["standing", "sitting", "walking", "running", "playing", "fighting", "falldown"]
+        ALL_EVENTS = ["calling",
+                        "clapping",
+                        "cycling",
+                        "dancing",
+                        "drinking",
+                        "eating",
+                        "fighting",
+                        "hugging",
+                        "laughing",
+                        "listening_to_music",
+                        "running",
+                        "sitting",
+                        "sleeping",
+                        "texting",
+                        "using_laptop"]
         event_counts = {event: 0 for event in ALL_EVENTS}
 
         for doc in results_collection.find(query):
@@ -594,7 +608,21 @@ def show_content(request):
 
 # 그래프 그릴 때 값 가져오기(라벨 수정함) = 전체 데이터
 def chart_data(request):
-    labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
+    labels = ["calling",
+                "clapping",
+                "cycling",
+                "dancing",
+                "drinking",
+                "eating",
+                "fighting",
+                "hugging",
+                "laughing",
+                "listening_to_music",
+                "running",
+                "sitting",
+                "sleeping",
+                "texting",
+                "using_laptop"]
     result = {label: 0 for label in labels}
 
     for doc in results_collection.find():
@@ -609,7 +637,21 @@ def chart_data(request):
 
 # 오늘 하루 데이터 가져오는 것
 def today_chart_data(request):
-    labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
+    labels = ["calling",
+                "clapping",
+                "cycling",
+                "dancing",
+                "drinking",
+                "eating",
+                "fighting",
+                "hugging",
+                "laughing",
+                "listening_to_music",
+                "running",
+                "sitting",
+                "sleeping",
+                "texting",
+                "using_laptop"]
     result = {label: 0 for label in labels}
 
     today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
