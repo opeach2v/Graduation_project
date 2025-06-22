@@ -158,26 +158,35 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch('/chart-data/')
     .then(response => response.json())
     .then(chartInfo => {
-      new Chart(document.getElementById("doughnut-chart"), {
-        type: 'doughnut',
-        data: {
-          labels: chartInfo.labels,
-          datasets: [{
-            label: "event",
-            backgroundColor: [
-              "#94d2bb", "#099396", "#00304e",
-              "#d62827", "#f58000", "#ffb504", "#748494"
-            ],
-            data: chartInfo.data
-          }]
-        },
-        options: {
-          title: {
-            display: true,
-            text: '반 전체 위험도 분석 (건)'
+      const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
+      const chartContainer = document.getElementById("doughnut-box");
+
+      if (totalEvents === 0) {
+        // 데이터가 없을 때 <p> 메시지 삽입
+        chartContainer.innerHTML = `<p>해당 반에서 위험 행동은 없습니다.</p>`;
+      }
+      else {
+        new Chart(document.getElementById("doughnut-chart"), {
+          type: 'doughnut',
+          data: {
+            labels: chartInfo.labels,
+            datasets: [{
+              label: "event",
+              backgroundColor: [
+                "#94d2bb", "#099396", "#00304e",
+                "#d62827", "#f58000", "#ffb504", "#748494"
+              ],
+              data: chartInfo.data
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: '반 전체 위험도 분석 (건)'
+            }
           }
-        }
-      });
+        });
+      }
     })
     .catch(error => {
       console.error("차트 데이터를 불러오는 중 오류 발생:", error);
