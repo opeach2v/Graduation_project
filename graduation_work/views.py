@@ -469,9 +469,13 @@ def showNotice_cont(request, id):
         start = today.replace(hour=0, minute=0, second=0, microsecond=0)
         end = start + timedelta(days=1)
 
+        # UTC 기준으로 변환
+        start_utc = today.astimezone(pytz.utc)
+        end_utc = (today + timedelta(days=1)).astimezone(pytz.utc)
+
         querys = {
             'child_id': id,
-            'date': start.replace(tzinfo=None)
+            'date': {'$gte': start_utc, '$lt': end_utc}
         }
         notice_doc = notice_collection.find_one({'child_id': id})
         cont = notice_collection.find_one(querys, {'content': 1, '_id': 0})
