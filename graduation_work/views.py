@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.http import HttpResponseNotAllowed, JsonResponse, HttpResponse
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, time, timedelta, timezone
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
@@ -464,14 +464,14 @@ def showNotice_cont(request, id):
         # 한국 시간대
         kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
-        today = datetime.now(kst)
-        # 자정으로 초기화 + 타임존 유지
-        start = today.replace(hour=0, minute=0, second=0, microsecond=0)
-        end = (start + timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        today = datetime.now(kst).date()  # date만 추출 (2025-06-23 등)
+        start = datetime.combine(today, time(0, 0, 0), tzinfo=kst)  # 00:00:00 KST
+        end = (start + timedelta(days=1))
+        end2 = datetime.combine(end, time(0, 0, 0), tzinfo=kst)
 
         # UTC 기준으로 변환
-        start_utc = today.astimezone(pytz.utc)
-        end_utc = end.astimezone(pytz.utc)
+        start_utc = start.astimezone(pytz.utc)
+        end_utc = end2.astimezone(pytz.utc)
 
         querys = {
             'child_id': id,
@@ -487,7 +487,7 @@ def showNotice_cont(request, id):
             'child_id': id,
             'timestamp': {
                 '$gte': start,
-                '$lt': end
+                '$lt': end2
             }
         }
 
