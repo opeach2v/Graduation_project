@@ -145,11 +145,16 @@ body {
     height: auto;
     min-height: 430px;
     text-align: center;
+    justify-content: space-between;
 }
 
 .doughnut-box {
     width: 400px;
-    
+}
+
+.bar-box {
+    width: 600px;
+    background-color: #ffffff;
 }
 
 /* .x-btn {

@@ -592,7 +592,7 @@ def show_content(request):
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
-# 그래프 그릴 때 값 가져오기(라벨 수정함)
+# 그래프 그릴 때 값 가져오기(라벨 수정함) = 전체 데이터
 def chart_data(request):
     labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
     result = {label: 0 for label in labels}
@@ -601,6 +601,30 @@ def chart_data(request):
         event_type = doc.get("event_type")
         if event_type in result:
             result[event_type] += 1
+
+    return JsonResponse({
+        "labels": labels,
+        "data": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
+    })
+
+# 오늘 하루 데이터 가져오는 것
+def today_chart_data(request):
+    labels = ["standing", "walking", "running", "sitting", "playing", "fighting", "falldown"]
+    result = {label: 0 for label in labels}
+
+    today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
+
+    for doc in results_collection.find():
+        event_type = doc.get("event_type")
+        timestamp = doc.get("timestamp")
+
+        if not timestamp:
+            continue
+
+        # timestamp에서 날짜만 추출
+        if isinstance(timestamp, datetime) and timestamp.date() == today:
+            if event_type in result:
+                result[event_type] += 1
 
     return JsonResponse({
         "labels": labels,

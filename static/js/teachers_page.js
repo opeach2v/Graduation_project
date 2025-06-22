@@ -153,7 +153,7 @@ window.onload = function() {
     window.history.pushState(null, "", window.location.href);
   };
 
-// 그래프 동적으로 그리기
+// 도넛 그래프 동적으로 그리기 (전체 데이터)
 document.addEventListener('DOMContentLoaded', function () {
   fetch('/chart-data/')
     .then(response => response.json())
@@ -178,6 +178,60 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }
       });
+    })
+    .catch(error => {
+      console.error("차트 데이터를 불러오는 중 오류 발생:", error);
+    });
+});
+
+// 바 그래프 동적으로 그리기 (당일 데이터)
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('/chart-data/')
+    .then(response => response.json())
+    .then(chartInfo => {
+      const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
+      const chartContainer = document.getElementById("bar-box");
+
+      if (totalEvents === 0) {
+        // 데이터가 없을 때 <p> 메시지 삽입
+        chartContainer.innerHTML = `<p>오늘 하루 위험 행동은 없습니다.</p>`;
+      }
+      else {
+        new Chart(document.getElementById("bar-chart"), {
+          type: 'bar',
+          data: {
+            labels: chartInfo.labels,
+            datasets: [{
+              label: "event",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+              ],
+              borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+              ],
+              data: chartInfo.data
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: '오늘의 위험도 분석 (건)'
+            }
+          }
+        });
+      }
     })
     .catch(error => {
       console.error("차트 데이터를 불러오는 중 오류 발생:", error);

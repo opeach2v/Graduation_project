@@ -16,13 +16,9 @@
     <!-- Django에서만 작동 -->
     <link rel="icon" href="{% static 'media/webLogo.png' %}">
     <link rel="apple-touch-icon" href="{% static 'media/webLogo.png' %}">
-    <!-- live server에서만 작동 -->
-    <link rel="icon" href="../media/webLogo.png">
-    <link rel="apple-touch-icon" href="../media/webLogo.png">
     <!-- Django에서만 작동 -->
     <link rel="stylesheet" href="{% static 'css/teachers_style.css' %}">
-    <!-- live server에서만 작동 -->
-    <link rel="stylesheet" href="../static/css/teachers_style.css">
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
@@ -115,6 +111,9 @@
             <div class="result-box">
                 <div class="doughnut-box">
                     <canvas id="doughnut-chart" width="400" height="250"></canvas>
+                </div>
+                <div class="bar-box">
+                    <canvas id="bar-chart" width="400" height="250"></canvas>
                 </div>
             </div>
         </section>
