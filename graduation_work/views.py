@@ -270,7 +270,7 @@ def input_results(request):
             # POST 데이터 받기
             child_id = request.POST.get('child_id')
             event_type = request.POST.get('action')
-            confidence = request.POST.get('confidence')
+            file_name = request.POST.get('file_name')
             timestamp_str = request.POST.get('timestamp')
 
             kst = pytz.timezone('Asia/Seoul')
@@ -281,7 +281,7 @@ def input_results(request):
             data = {
                 "child_id": child_id,
                 "event_type": event_type,
-                "confidence": confidence,
+                "file_name": file_name,
                 "timestamp": dt_kst
             }
 
