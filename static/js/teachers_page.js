@@ -186,10 +186,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 바 그래프 동적으로 그리기 (당일 데이터)
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/chart-data/')
+  fetch('/today-chart-data/')
     .then(response => response.json())
     .then(chartInfo => {
-      const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
+      const totalEvents = chartInfo.todayData.reduce((sum, val) => sum + val, 0);
       const chartContainer = document.getElementById("bar-box");
 
       if (totalEvents === 0) {
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         new Chart(document.getElementById("bar-chart"), {
           type: 'bar',
           data: {
-            labels: chartInfo.labels,
+            labels: chartInfo.todayLabels,
             datasets: [{
               label: "event",
               backgroundColor: [
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
               ],
-              data: chartInfo.data
+              data: chartInfo.todayData
             }]
           },
           options: {

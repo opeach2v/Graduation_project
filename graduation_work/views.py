@@ -627,6 +627,6 @@ def today_chart_data(request):
                 result[event_type] += 1
 
     return JsonResponse({
-        "labels": labels,
-        "data": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
+        "todayLabels": labels,
+        "todayData": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
     })
