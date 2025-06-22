@@ -300,9 +300,9 @@ def showResults(request):
     for doc in results_collection.find({}):
         child_id = doc.get("child_id")
         event_type = doc.get("event_type")
-        confidence = doc.get("confidence")
+        file_name = doc.get("file_name")
         timestamp = doc.get("timestamp")
-        res.append({"child_id": child_id, "event_type": event_type, "confidence": confidence, "timestamp": timestamp})
+        res.append({"child_id": child_id, "event_type": event_type, "file_name": file_name, "timestamp": timestamp})
     
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
