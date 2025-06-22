@@ -427,13 +427,15 @@ def writeNotice(request, teacher_id, classroom):
             if child_doc is None:
                 raise ValueError("child_doc를 찾을 수 없습니다.")
 
-            date = datetime.now(ZoneInfo("Asia/Seoul"))  # 한국 시간으로 현재 시각
-            format_date = date.replace(hour=0, minute=0, second=0, microsecond=0)  # 날짜만 유지하고 시간은 0시로
+            kst = pytz.timezone('Asia/Seoul')
+            # 오늘 날짜 검색하기
+            today = datetime.now(kst)
+            # 자정으로 초기화 + 타임존 유지
 
             notice = {
                 "child_id": child_id,
                 "content": content,
-                "date": format_date,  # 현재 시간
+                "date": today,  # 현재 시간
                 "teacher_id": teacher_id,
                 "classroom": classroom
             }
