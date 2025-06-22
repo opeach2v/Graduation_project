@@ -131,7 +131,7 @@ body {
     margin: auto;
     margin-top: 7px;
     width: 90%;
-    height: 450px;
+    height: 400px;
 }
 
 .result-box {
@@ -153,9 +153,13 @@ body {
 }
 
 .bar-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 600px;
     background-color: #ffffff;
-    height: 400px;
+    height: 350px;
+    border-radius: 10px;
 }
 
 .bar-box p {
