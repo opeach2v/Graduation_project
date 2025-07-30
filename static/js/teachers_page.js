@@ -156,7 +156,7 @@ window.onload = function() {
 
 // 도넛 그래프 동적으로 그리기 (전체 데이터)
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/chart-data/${teacher_id}')
+  fetch(`/chart-data/${teacher_id}`)
     .then(response => response.json())
     .then(chartInfo => {
       const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
