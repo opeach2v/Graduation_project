@@ -639,6 +639,8 @@ def today_chart_data(request, classroom):
     result = {label: 0 for label in labels}
 
     today = datetime.today().date()
+    start = datetime.combine(today, time.min)  # 오늘 00:00:00
+    end = datetime.combine(today, time.max)    # 오늘 23:59:59.999999
 
     # 1. classroom에 해당하는 아이들 _id 가져오기
     child_docs = children_collection.find({"classroom": classroom})
@@ -652,8 +654,12 @@ def today_chart_data(request, classroom):
 
     # 2. 해당 child_id + 오늘 날짜 필터링해서 결과 수집
     result_docs = results_collection.find({
-        "child_id": {"$in": child_ids}
+        "child_id": {"$in": child_ids},
+        "timestamp": {"$gte": start, "$lt": end}
     })
+
+    doc = results_collection.find_one({"child_id": child_ids[0]})
+    print(doc.get("timestamp"), type(doc.get("timestamp")))
 
     for doc in result_docs:
         event_type = doc.get("event_type")
