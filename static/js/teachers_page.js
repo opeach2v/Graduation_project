@@ -275,10 +275,31 @@ document.addEventListener('DOMContentLoaded', function () {
           options: {
             title: {
               display: true,
-              text: '오늘의 위험도 분석 (건)'
+              text: '오늘의 행동 분석 (건)'
             }
           }
         });
+        const chartContainer = document.getElementById("bar-box");
+
+        // 부모가 flex row면 아래처럼 바꿔줘도 됨
+        chartContainer.style.display = "flex";
+        chartContainer.style.flexDirection = "column";
+        chartContainer.style.alignItems = "center";
+
+        const pCount = document.createElement("p");
+        pCount.style.marginTop = "15px";
+        pCount.style.fontWeight = "bold";
+        pCount.innerText = countMessage;
+
+        chartContainer.appendChild(pCount);
+
+        if (ratioMessage) {
+          const pRatio = document.createElement("p");
+          pRatio.style.fontWeight = "bold";
+          pRatio.style.textAlign = "center";
+          pRatio.innerText = ratioMessage;
+          chartContainer.appendChild(pRatio);
+        }
       }
     })
     .catch(error => {
