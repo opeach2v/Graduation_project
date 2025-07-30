@@ -647,7 +647,7 @@ def today_chart_data(request, classroom):
     end = kst.localize(end)
 
     print(f"start: {start}, end: {end}")
-    print(f"child_ids: {child_ids}")
+    print(f"child_ids: {child_ids.count_documents({'classroom': classroom})}")
     print(f"count: {results_collection.count_documents({
         'child_id': {'$in': child_ids},
         'timestamp': {'$gte': start, '$lt': end}
