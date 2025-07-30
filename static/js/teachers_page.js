@@ -1,7 +1,7 @@
-// 개인 알림장 열기
 let currentChildId;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
-let classroom = "{{ teacher.classroom|escapejs }}";
+let classroom = `{{ teacher.classroom|escapejs }}`;
 
+// 개인 알림장 열기
 function openForm(childName, childId) {
   document.querySelector("#formArea .form-content h3").innerText = `${childName}의 알림장 내용 작성`;
   currentChildId = childId;  // 현재 열려있는 아이의 ID 저장
