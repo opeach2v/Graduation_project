@@ -646,6 +646,7 @@ def today_chart_data(request, classroom):
     end = datetime.combine(today_kst, time.max)
     end = kst.localize(end)
 
+    print(f"{results_collection.find_one()}")
     # 1. classroom에 해당하는 아이들 _id 가져오기
     child_docs = children_collection.find({"classroom": classroom})
     child_ids = [doc["_id"] for doc in child_docs]
@@ -661,9 +662,6 @@ def today_chart_data(request, classroom):
         "child_id": {"$in": child_ids},
         "timestamp": {"$gte": start, "$lt": end}
     })
-
-    print(f"{result_docs.count()} documents found for today")
-    print(f"{[result_docs[0]]}")
 
     for doc in result_docs:
         event_type = doc.get("event_type")
