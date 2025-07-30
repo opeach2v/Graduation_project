@@ -658,8 +658,7 @@ def today_chart_data(request, classroom):
         "timestamp": {"$gte": start, "$lt": end}
     })
 
-    doc = results_collection.find_one({"child_id": child_ids[0]})
-    print(f"{doc.get("timestamp") }, {type(doc.get("timestamp"))}")
+    print(f"{result_docs.get("timestamp") }, {type(result_docs.get("timestamp"))}")
 
     for doc in result_docs:
         event_type = doc.get("event_type")
