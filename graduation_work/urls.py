@@ -23,7 +23,7 @@ urlpatterns = [
 
     # 데이터 확인용 
     path('show/', views.show_users),
-    path('res_show/', views.showResults),
+    path('res_show/<str:classroom>', views.showResults),
     path('show_children/', views.show_children),
     path('show_parents/', views.showParents, name='showParent'),    # 찐 학부모 페이지
     path('showparents/', views.show_parents),

@@ -1,5 +1,6 @@
 // 개인 알림장 열기
 let currentChildId;  // 현재 열려있는 알림장의 아이 ID (나중에 알림장 내용할 때 쓸 것)
+let classroom = "{{ teacher.classroom|escapejs }}";
 
 function openForm(childName, childId) {
   document.querySelector("#formArea .form-content h3").innerText = `${childName}의 알림장 내용 작성`;
@@ -155,7 +156,7 @@ window.onload = function() {
 
 // 도넛 그래프 동적으로 그리기 (전체 데이터)
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('/chart-data/')
+  fetch('/chart-data/${teacher_id}')
     .then(response => response.json())
     .then(chartInfo => {
       const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);

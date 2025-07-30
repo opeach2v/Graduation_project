@@ -605,22 +605,32 @@ def show_content(request):
     return JsonResponse({'res': res}, safe=False, json_dumps_params={'ensure_ascii': False}, content_type="application/json; charset=UTF-8")
 
 # 그래프 그릴 때 값 가져오기(라벨 수정함) = 전체 데이터
-def chart_data(request):
-    labels = ["eating",
-                        "fighting",
-                        "running",
-                        "sitting",
-                        "sleeping"]
+def chart_data(request, classroom):
+    labels = ["eating", "fighting", "running", "sitting", "sleeping"]
     result = {label: 0 for label in labels}
 
-    for doc in results_collection.find():
+    # 1. children_collection에서 해당 반 아이들 ID 찾기
+    child_docs = children_collection.find({"classroom": classroom})
+    child_ids = [doc["_id"] for doc in child_docs]
+
+    if not child_ids:
+        return JsonResponse({
+            "labels": labels,
+            "data": [0] * len(labels)
+        })
+
+    # 2. results_collection에서 해당 child_id들에 해당하는 event 검색
+    result_docs = results_collection.find({"child_id": {"$in": child_ids}})
+
+    # 3. 라벨별로 카운트
+    for doc in result_docs:
         event_type = doc.get("event_type")
         if event_type in result:
             result[event_type] += 1
 
     return JsonResponse({
         "labels": labels,
-        "data": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
+        "data": [result[label] for label in labels]
     })
 
 # 오늘 하루 데이터 가져오는 것
@@ -634,7 +644,7 @@ def today_chart_data(request):
 
     today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
 
-    for doc in results_collection.find():
+    for doc in results_collection.find({'classroom': parent_id}):
         event_type = doc.get("event_type")
         timestamp = doc.get("timestamp")
 
