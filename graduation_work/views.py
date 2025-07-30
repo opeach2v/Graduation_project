@@ -638,9 +638,13 @@ def today_chart_data(request, classroom):
     labels = ["eating", "fighting", "running", "sitting", "sleeping"]
     result = {label: 0 for label in labels}
 
-    today = datetime.today().date()
-    start = datetime.combine(today, time.min)  # 오늘 00:00:00
-    end = datetime.combine(today, time.max)    # 오늘 23:59:59.999999
+    kst = pytz.timezone('Asia/Seoul')
+
+    today_kst = datetime.now(kst).date()
+    start = datetime.combine(today_kst, time.min)
+    start = kst.localize(start)
+    end = datetime.combine(today_kst, time.max)
+    end = kst.localize(end)
 
     # 1. classroom에 해당하는 아이들 _id 가져오기
     child_docs = children_collection.find({"classroom": classroom})
@@ -658,7 +662,7 @@ def today_chart_data(request, classroom):
         "timestamp": {"$gte": start, "$lt": end}
     })
 
-    print(f"{result_docs.get("timestamp") }, {type(result_docs.get("timestamp"))}")
+    print(f"{result_docs[0].get("timestamp") }, {type(result_docs.get("timestamp"))}")
 
     for doc in result_docs:
         event_type = doc.get("event_type")
