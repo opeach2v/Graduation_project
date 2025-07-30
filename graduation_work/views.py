@@ -489,8 +489,8 @@ def showNotice_cont(request, id):
         query = {
             'child_id': id,
             'timestamp': {
-                '$gte': start_kst,
-                '$lt': end_kst
+                '$gte': start_utc,
+                '$lt': end_utc
             }
         }
         print(f"query: {query}")
