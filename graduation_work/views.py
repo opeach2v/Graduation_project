@@ -493,8 +493,7 @@ def showNotice_cont(request, id):
                 '$lt': end_kst
             }
         }
-
-        results_collection.find(query)
+        print(f"query: {query}")
         total_res = results_collection.count_documents(query)   # 오늘 하루의 행동 분석 갯수
         event_counts = {}   # 각 행동들의 갯수
 
