@@ -504,6 +504,7 @@ def showNotice_cont(request, id):
         event_counts = {event: 0 for event in ALL_EVENTS}
 
         for doc in results_collection.find(query):
+            print(f"{doc}")
             event_type = doc.get('event_type')
             if event_type in event_counts:
                 event_counts[event_type] += 1
