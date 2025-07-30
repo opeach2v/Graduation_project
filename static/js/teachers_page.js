@@ -162,6 +162,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
       const chartContainer = document.getElementById("doughnut-box");
 
+      console.log("Chart Info:", chartInfo); // 디버깅용 로그
+
       if (totalEvents === 0) {
         // 데이터가 없을 때 <p> 메시지 삽입
         chartContainer.innerHTML = `<p>해당 반에서 위험 행동은 없습니다.</p>`;
