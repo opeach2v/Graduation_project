@@ -463,14 +463,18 @@ def showNotice_cont(request, id):
     try:
         # 한국 시간대
         kst = pytz.timezone('Asia/Seoul')
-        # 오늘 날짜 검색하기
-        today = datetime.now(kst).date()  # date만 추출 (2025-06-23 등)
-        start = kst.localize(datetime.combine(today, time(0, 0, 0)))
-        end = start + timedelta(days=1)
+        # 오늘 KST 날짜
+        today_kst = datetime.now(kst).date()
 
-        # UTC 기준으로 변환
-        start_utc = start.astimezone(pytz.utc)
-        end_utc = end.astimezone(pytz.utc)
+        # 오늘 00:00:00 KST (timezone-aware)
+        start_kst = kst.localize(datetime.combine(today_kst, time.min))
+
+        # 내일 00:00:00 KST (timezone-aware)
+        end_kst = start_kst + timedelta(days=1)
+
+        # UTC로 변환 (MongoDB 저장도 UTC라고 가정)
+        start_utc = start_kst.astimezone(pytz.utc)
+        end_utc = end_kst.astimezone(pytz.utc)
 
         querys = {
             'child_id': id,
@@ -485,8 +489,8 @@ def showNotice_cont(request, id):
         query = {
             'child_id': id,
             'timestamp': {
-                '$gte': start,
-                '$lt': end
+                '$gte': start_kst,
+                '$lt': end_kst
             }
         }
 
