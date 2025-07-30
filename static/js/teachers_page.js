@@ -209,6 +209,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const chartContainer = document.getElementById("doughnut-box");
 
+        // 부모가 flex row면 아래처럼 바꿔줘도 됨
+        chartContainer.style.display = "flex";
+        chartContainer.style.flexDirection = "column";
+        chartContainer.style.alignItems = "center";
+
         const pCount = document.createElement("p");
         pCount.style.marginTop = "15px";
         pCount.style.fontWeight = "bold";
@@ -219,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (ratioMessage) {
           const pRatio = document.createElement("p");
           pRatio.style.fontWeight = "bold";
+          pRatio.style.textAlign = "center";
           pRatio.innerText = ratioMessage;
           chartContainer.appendChild(pRatio);
         }
