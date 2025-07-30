@@ -186,10 +186,42 @@ document.addEventListener('DOMContentLoaded', function () {
           options: {
             title: {
               display: true,
-              text: '반 전체 위험도 분석 (건)'
+              text: '반 전체 행동 분석 (건)'
             }
           }
         });
+
+        const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
+        const fightingIndex = chartInfo.labels.indexOf("fighting");
+        let countMessage = "";
+        let ratioMessage = "";
+
+        if (fightingIndex !== -1 && totalEvents > 0) {
+          const fightingCount = chartInfo.data[fightingIndex];
+          const fightingRatio = ((fightingCount / totalEvents) * 100).toFixed(1);
+
+          countMessage = `위험 요소 갯수/요소 전체 갯수: ${fightingCount}/${totalEvents}`;
+          ratioMessage = `위험 행동(fighting) 비율: ${fightingRatio}%`;
+        } else {
+          countMessage = `위험 행동(fighting) 데이터가 없습니다.`;
+          ratioMessage = "";
+        }
+
+        const chartContainer = document.getElementById("doughnut-box");
+
+        const pCount = document.createElement("p");
+        pCount.style.marginTop = "15px";
+        pCount.style.fontWeight = "bold";
+        pCount.innerText = countMessage;
+
+        chartContainer.appendChild(pCount);
+
+        if (ratioMessage) {
+          const pRatio = document.createElement("p");
+          pRatio.style.fontWeight = "bold";
+          pRatio.innerText = ratioMessage;
+          chartContainer.appendChild(pRatio);
+        }
       }
     })
     .catch(error => {
