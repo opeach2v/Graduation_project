@@ -465,13 +465,12 @@ def showNotice_cont(request, id):
         kst = pytz.timezone('Asia/Seoul')
         # 오늘 날짜 검색하기
         today = datetime.now(kst).date()  # date만 추출 (2025-06-23 등)
-        start = datetime.combine(today, time(0, 0, 0), tzinfo=kst)  # 00:00:00 KST
-        end = (start + timedelta(days=1))
-        end2 = datetime.combine(end, time(0, 0, 0), tzinfo=kst)
+        start = kst.localize(datetime.combine(today, time(0, 0, 0)))
+        end = start + timedelta(days=1)
 
         # UTC 기준으로 변환
         start_utc = start.astimezone(pytz.utc)
-        end_utc = end2.astimezone(pytz.utc)
+        end_utc = end.astimezone(pytz.utc)
 
         querys = {
             'child_id': id,
@@ -487,7 +486,7 @@ def showNotice_cont(request, id):
             'child_id': id,
             'timestamp': {
                 '$gte': start,
-                '$lt': end2
+                '$lt': end
             }
         }
 
