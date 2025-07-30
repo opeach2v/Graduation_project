@@ -155,8 +155,8 @@ window.onload = function() {
 
 // 도넛 그래프 동적으로 그리기 (전체 데이터)
 document.addEventListener('DOMContentLoaded', function () {
-  const classroom = document.getElementById("resultContainer").dataset.classroom;
-  
+  const classroom = document.getElementById("doughnut-box").dataset.classroom;
+
   fetch(`/chart-data/${classroom}`)
     .then(response => response.json())
     .then(chartInfo => {
