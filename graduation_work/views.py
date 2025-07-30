@@ -662,7 +662,8 @@ def today_chart_data(request, classroom):
         "timestamp": {"$gte": start, "$lt": end}
     })
 
-    print(f"{result_docs[0].get("timestamp") }, {type(result_docs.get("timestamp"))}")
+    print(f"{result_docs.count()} documents found for today")
+    print(f"{result_docs}")
 
     for doc in result_docs:
         event_type = doc.get("event_type")
