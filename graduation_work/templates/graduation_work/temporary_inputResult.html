@@ -21,8 +21,9 @@
                 
                 <br>
                 <label for="danger">위험 유무: </label>
-                <input type="radio" id="danger" name="action" value="위험"><label for="danger">위험</label>
-                <input type="radio" id="nodanger" name="action" value="비위험"><label for="nodanger">비위험</label>
+                <select id="danger" for="danger" name="danger">
+                    <option value="위험">위험</option>
+                    <option value="비위험">비위험</option>
                 <label for="timestamp">감지 시간: </label>
                 <input type="datetime-local" step="1" id="timestamp" name="timestamp"><br><br>
                 <input type="submit" value="저장">
