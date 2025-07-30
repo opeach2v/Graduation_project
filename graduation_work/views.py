@@ -663,19 +663,12 @@ def today_chart_data(request, classroom):
     })
 
     print(f"{result_docs.count()} documents found for today")
-    print(f"{result_docs}")
+    print(f"{[result_docs[0]]}")
 
     for doc in result_docs:
         event_type = doc.get("event_type")
-        timestamp = doc.get("timestamp")
-
-        if not timestamp:
-            continue
-
-        # timestamp가 datetime 타입이고 오늘 날짜인지 확인
-        if isinstance(timestamp, datetime) and timestamp.date() == today:
-            if event_type in result:
-                result[event_type] += 1
+        if event_type in result:
+            result[event_type] += 1
 
     return JsonResponse({
         "todayLabels": labels,
