@@ -29,7 +29,7 @@ urlpatterns = [
     path('showparents/', views.show_parents),
 
     path('chart-data/<str:classroom>', views.chart_data, name='chart_data'),
-    path( 'today-chart-data/', views.today_chart_data, name='today_chart_data'),
+    path( 'today-chart-data/<str:classroom>', views.today_chart_data, name='today_chart_data'),
 
     path('show_teachers/', views.showTeachers),
 

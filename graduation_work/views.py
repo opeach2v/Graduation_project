@@ -634,29 +634,40 @@ def chart_data(request, classroom):
     })
 
 # 오늘 하루 데이터 가져오는 것
-def today_chart_data(request):
-    labels = ["eating",
-                        "fighting",
-                        "running",
-                        "sitting",
-                        "sleeping"]
+def today_chart_data(request, classroom):
+    labels = ["eating", "fighting", "running", "sitting", "sleeping"]
     result = {label: 0 for label in labels}
 
-    today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
+    today = datetime.today().date()
 
-    for doc in results_collection.find():
+    # 1. classroom에 해당하는 아이들 _id 가져오기
+    child_docs = children_collection.find({"classroom": classroom})
+    child_ids = [doc["_id"] for doc in child_docs]
+
+    if not child_ids:
+        return JsonResponse({
+            "todayLabels": labels,
+            "todayData": [0] * len(labels)
+        })
+
+    # 2. 해당 child_id + 오늘 날짜 필터링해서 결과 수집
+    result_docs = results_collection.find({
+        "child_id": {"$in": child_ids}
+    })
+
+    for doc in result_docs:
         event_type = doc.get("event_type")
         timestamp = doc.get("timestamp")
 
         if not timestamp:
             continue
 
-        # timestamp에서 날짜만 추출
+        # timestamp가 datetime 타입이고 오늘 날짜인지 확인
         if isinstance(timestamp, datetime) and timestamp.date() == today:
             if event_type in result:
                 result[event_type] += 1
 
     return JsonResponse({
         "todayLabels": labels,
-        "todayData": [result[label] for label in labels]     # 라벨에 따른 숫자 들어감
+        "todayData": [result[label] for label in labels]
     })
