@@ -635,43 +635,33 @@ def chart_data(request, classroom):
 
 # 오늘 하루 데이터 가져오는 것
 def today_chart_data(request, classroom):
-    labels = ["eating", "fighting", "running", "sitting", "sleeping"]
-    result = {label: 0 for label in labels}
+     # 한국 시간대 기준
+        kst = pytz.timezone('Asia/Seoul')
+        today = datetime.now(kst).date()
+        start = datetime.combine(today, time(0, 0, 0), tzinfo=kst)
+        end = start + timedelta(days=1)
 
-    kst = pytz.timezone('Asia/Seoul')
+        # MongoDB에 저장된 timestamp가 datetime이라면 KST로 비교 가능
+        query = {
+            'classroom': classroom,
+            'timestamp': {
+                '$gte': start,
+                '$lt': end
+            }
+        }
 
-    today_kst = datetime.now(kst).date()
-    start = datetime.combine(today_kst, time.min).replace(tzinfo=kst)
-    end = datetime.combine(today_kst, time.max).replace(tzinfo=kst)
+        # 이벤트 카운트 초기화
+        ALL_EVENTS = ["eating", "fighting", "running", "sitting", "sleeping"]
+        event_counts = {event: 0 for event in ALL_EVENTS}
 
-    print(f"start: {start}, end: {end}")
-    print(f"child_ids: {children_collection.count_documents({'classroom': classroom})}")
-    print(f"count: {results_collection.count_documents({
-        'child_id': {'$in': child_ids},
-        'timestamp': {'$gte': start, '$lt': end}
-    })}")
-    # 1. classroom에 해당하는 아이들 _id 가져오기
-    child_docs = children_collection.find({"classroom": classroom})
-    child_ids = [doc["_id"] for doc in child_docs]
+        for doc in results_collection.find(query):
+            event_type = doc.get('event_type')
+            if event_type in event_counts:
+                event_counts[event_type] += 1
 
-    if not child_ids:
-        return JsonResponse({
-            "todayLabels": labels,
-            "todayData": [0] * len(labels)
-        })
+        sum_data = {
+            "event_counts": event_counts
+        }
 
-    # 2. 해당 child_id + 오늘 날짜 필터링해서 결과 수집
-    result_docs = results_collection.find({
-        "child_id": {"$in": child_ids},
-        "timestamp": {"$gte": start, "$lt": end}
-    })
-
-    for doc in result_docs:
-        event_type = doc.get("event_type")
-        if event_type in result:
-            result[event_type] += 1
-
-    return JsonResponse({
-        "todayLabels": labels,
-        "todayData": [result[label] for label in labels]
-    })
+        print(f"[DEBUG] event_counts: {event_counts}")
+        return JsonResponse(sum_data)
