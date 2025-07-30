@@ -644,7 +644,7 @@ def today_chart_data(request):
 
     today = datetime.today().date()  # 오늘 날짜 (연-월-일만)
 
-    for doc in results_collection.find({'classroom': parent_id}):
+    for doc in results_collection.find():
         event_type = doc.get("event_type")
         timestamp = doc.get("timestamp")
 
