@@ -641,10 +641,8 @@ def today_chart_data(request, classroom):
     kst = pytz.timezone('Asia/Seoul')
 
     today_kst = datetime.now(kst).date()
-    start = datetime.combine(today_kst, time.min)
-    start = kst.localize(start)
-    end = datetime.combine(today_kst, time.max)
-    end = kst.localize(end)
+    start = datetime.combine(today_kst, time.min).replace(tzinfo=kst)
+    end = datetime.combine(today_kst, time.max).replace(tzinfo=kst)
 
     print(f"start: {start}, end: {end}")
     print(f"child_ids: {children_collection.count_documents({'classroom': classroom})}")
