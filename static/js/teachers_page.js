@@ -170,11 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
         chartContainer.innerHTML = `<p>해당 반에서 위험 행동은 없습니다.</p>`;
       }
       else {
-        const colors = chartInfo.labels.map(label => {
-          if (label === "fighting") return "#ff0000"; // 빨간색
-          return "#94d2bb"; // 기본색
-        });
-
         new Chart(document.getElementById("doughnut-chart"), {
           type: 'doughnut',
           data: {
@@ -255,10 +250,6 @@ document.addEventListener('DOMContentLoaded', function () {
         chartContainer.innerHTML = `<p>오늘 하루 위험 행동은 없습니다.</p>`;
       }
       else {
-        const colors = chartInfo.labels.map(label => {
-          if (label === "fighting") return "#ff0000"; // 빨간색
-          return "#94d2bb"; // 기본색
-        });
         new Chart(document.getElementById("bar-chart"), {
           type: 'bar',
           data: {
