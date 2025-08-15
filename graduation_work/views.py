@@ -433,7 +433,7 @@ def writeNotice(request, teacher_id, classroom):
             # 자정으로 초기화 + 타임존 유지
 
             notice = {
-                "child_id": child_id,
+                "child_id": ObjectId(child_id),
                 "content": content,
                 "date": today,  # 현재 시간
                 "teacher_id": teacher_id,
