@@ -273,16 +273,16 @@ def input_results(request):
             danger = request.POST.get('danger')
             timestamp_str = request.POST.get('timestamp')
 
-            kst = pytz.timezone('Asia/Seoul')
-            dt = datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S")  # naive datetime
-            dt_kst = kst.localize(dt)  # KST timezone-aware datetime
+            # 입력값을 KST로 해석 → UTC로 변환
+            dt_naive = datetime.strptime(timestamp_str, "%Y-%m-%dT%H:%M:%S")
+            dt_utc = pytz.timezone('Asia/Seoul').localize(dt_naive).astimezone(pytz.utc)
 
             # 데이터 생성
             data = {
                 "child_id": child_id,
                 "event_type": event_type,
                 "danger": danger,
-                "timestamp": dt_kst
+                "timestamp": dt_utc  # UTC로 저장
             }
 
             # mongoDB에 저장
