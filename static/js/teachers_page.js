@@ -170,6 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
         chartContainer.innerHTML = `<p>해당 반에서 위험 행동은 없습니다.</p>`;
       }
       else {
+        const colors = chartInfo.labels.map(label => {
+          if (label === "fighting") return "#ff0000"; // 빨간색
+          return "#94d2bb"; // 기본색
+        });
+
         new Chart(document.getElementById("doughnut-chart"), {
           type: 'doughnut',
           data: {
@@ -216,16 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const pCount = document.createElement("p");
         pCount.style.marginTop = "15px";
         pCount.style.fontWeight = "bold";
-        // 메시지 안에서 fighting 부분만 span으로 감싸서 red
-        if (countMessage.includes("fighting")) {
-          const modifiedMessage = countMessage.replace(
-            "fighting",
-            '<span style="color:red; font-weight:bold;">fighting</span>'
-          );
-          pCount.innerHTML = modifiedMessage; // innerHTML 사용
-        } else {
-          pCount.innerText = countMessage;
-        }
+        pCount.innerText = countMessage;
 
         chartContainer.appendChild(pCount);
 
@@ -259,6 +255,10 @@ document.addEventListener('DOMContentLoaded', function () {
         chartContainer.innerHTML = `<p>오늘 하루 위험 행동은 없습니다.</p>`;
       }
       else {
+        const colors = chartInfo.labels.map(label => {
+          if (label === "fighting") return "#ff0000"; // 빨간색
+          return "#94d2bb"; // 기본색
+        });
         new Chart(document.getElementById("bar-chart"), {
           type: 'bar',
           data: {
@@ -307,15 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const pRatio = document.createElement("p");
           pRatio.style.fontWeight = "bold";
           pRatio.style.textAlign = "center";
-          if (ratioMessage.includes("fighting")) {
-            const modifiedRatio = ratioMessage.replace(
-              "fighting",
-              '<span style="color:red; font-weight:bold;">fighting</span>'
-            );
-            pRatio.innerHTML = modifiedRatio;
-          } else {
-            pRatio.innerText = ratioMessage;
-          }
+          pRatio.innerText = ratioMessage;
           chartContainer.appendChild(pRatio);
         }
       }
