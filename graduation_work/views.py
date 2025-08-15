@@ -461,18 +461,15 @@ def showNotice_cont(request, id):
     print(f"child_id: {id}")
 
     try:
-        # 한국 시간대
+        # 한국 시간대 기준
         kst = pytz.timezone('Asia/Seoul')
-        # 오늘 KST 날짜
+        
+        # 오늘 날짜 (KST 기준)
         today_kst = datetime.now(kst).date()
-
-        # 오늘 00:00:00 KST (timezone-aware)
-        start_kst = kst.localize(datetime.combine(today_kst, time.min))
-
-        # 내일 00:00:00 KST (timezone-aware)
+        start_kst = datetime.combine(today_kst, time(0, 0, 0), tzinfo=kst)
         end_kst = start_kst + timedelta(days=1)
 
-        # UTC로 변환 (MongoDB 저장도 UTC라고 가정)
+        # KST → UTC 변환 (DB 조회용)
         start_utc = start_kst.astimezone(pytz.utc)
         end_utc = end_kst.astimezone(pytz.utc)
 
@@ -498,11 +495,11 @@ def showNotice_cont(request, id):
         event_counts = {}   # 각 행동들의 갯수
 
         ALL_EVENTS = [
-                        "eating",
-                        "fighting",
-                        "running",
-                        "sitting",
-                        "sleeping"]
+            "fighting",
+            "eating",
+            "running",
+            "sitting",
+            "sleeping"]
         event_counts = {event: 0 for event in ALL_EVENTS}
 
         for doc in results_collection.find(query):
@@ -609,7 +606,7 @@ def show_content(request):
 
 # 그래프 그릴 때 값 가져오기(라벨 수정함) = 전체 데이터
 def chart_data(request, classroom):
-    labels = ["eating", "fighting", "running", "sitting", "sleeping"]
+    labels = ["fighting", "eating", "running", "sitting", "sleeping"]
     result = {label: 0 for label in labels}
 
     # 1. children_collection에서 해당 반 아이들 ID 찾기
@@ -653,7 +650,6 @@ def today_chart_data(request, classroom):
         child_docs = children_collection.find({"classroom": classroom})
         child_ids = [doc["_id"] for doc in child_docs]
 
-        # MongoDB에 저장된 timestamp가 datetime이라면 KST로 비교 가능
         query = {
             "child_id": {"$in": child_ids},
             'timestamp': {
@@ -663,7 +659,7 @@ def today_chart_data(request, classroom):
         }
 
         # 이벤트 카운트 초기화
-        ALL_EVENTS = ["eating", "fighting", "running", "sitting", "sleeping"]
+        ALL_EVENTS = ["fighting", "eating", "running", "sitting", "sleeping"]
         event_counts = {event: 0 for event in ALL_EVENTS}
 
         for doc in results_collection.find(query):
