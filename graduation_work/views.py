@@ -279,7 +279,7 @@ def input_results(request):
 
             # 데이터 생성
             data = {
-                "child_id": child_id,
+                "child_id": ObjectId(child_id),
                 "event_type": event_type,
                 "danger": danger,
                 "timestamp": dt_utc  # UTC로 저장
@@ -638,18 +638,24 @@ def chart_data(request, classroom):
 
 # 오늘 하루 데이터 가져오는 것
 def today_chart_data(request, classroom):
-     # 한국 시간대 기준
+        # 한국 시간대 기준
         kst = pytz.timezone('Asia/Seoul')
-        today = datetime.now(kst).date()
-        start = datetime.combine(today, time(0, 0, 0), tzinfo=kst)
-        end = start + timedelta(days=1)
+        
+        # 오늘 날짜 (KST 기준)
+        today_kst = datetime.now(kst).date()
+        start_kst = datetime.combine(today_kst, time(0, 0, 0), tzinfo=kst)
+        end_kst = start_kst + timedelta(days=1)
+
+        # KST → UTC 변환 (DB 조회용)
+        start_utc = start_kst.astimezone(pytz.utc)
+        end_utc = end_kst.astimezone(pytz.utc)
 
         # MongoDB에 저장된 timestamp가 datetime이라면 KST로 비교 가능
         query = {
             'classroom': classroom,
             'timestamp': {
-                '$gte': start,
-                '$lt': end
+                '$gte': start_utc,
+                '$lt': end_utc
             }
         }
 
