@@ -474,7 +474,7 @@ def showNotice_cont(request, id):
         end_utc = end_kst.astimezone(pytz.utc)
 
         querys = {
-            'child_id': id,
+            'child_id': ObjectId(id),
             'date': {'$gte': start_utc, '$lt': end_utc}
         }
         notice_doc = notice_collection.find_one({'child_id': id})
@@ -484,7 +484,7 @@ def showNotice_cont(request, id):
         print(f"cont:", cont)
 
         query = {
-            'child_id': id,
+            'child_id': ObjectId(id),
             'timestamp': {
                 '$gte': start_utc,
                 '$lt': end_utc
