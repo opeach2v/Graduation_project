@@ -662,9 +662,11 @@ def today_chart_data(request, classroom):
             if event_type in event_counts:
                 event_counts[event_type] += 1
 
-        sum_data = {
-            "event_counts": event_counts
-        }
+        todayData = [event_counts[event] for event in ALL_EVENTS]
+        todayLabels = ALL_EVENTS
 
         print(f"[DEBUG] event_counts: {event_counts}")
-        return JsonResponse(sum_data)
+        return JsonResponse({
+            "todayData": todayData,
+            "todayLabels": todayLabels
+    })
