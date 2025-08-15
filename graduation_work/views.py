@@ -477,7 +477,7 @@ def showNotice_cont(request, id):
             'child_id': ObjectId(id),
             'date': {'$gte': start_utc, '$lt': end_utc}
         }
-        notice_doc = notice_collection.find_one({'child_id': id})
+        notice_doc = notice_collection.find_one(querys)
         cont = notice_collection.find_one(querys, {'content': 1, '_id': 0})
         print(f"notice_doc", notice_doc)
         print(f"query:", querys)
