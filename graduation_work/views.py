@@ -650,9 +650,12 @@ def today_chart_data(request, classroom):
         start_utc = start_kst.astimezone(pytz.utc)
         end_utc = end_kst.astimezone(pytz.utc)
 
+        child_docs = children_collection.find({"classroom": classroom})
+        child_ids = [doc["_id"] for doc in child_docs]
+
         # MongoDB에 저장된 timestamp가 datetime이라면 KST로 비교 가능
         query = {
-            'classroom': classroom,
+            "child_id": {"$in": child_ids},
             'timestamp': {
                 '$gte': start_utc,
                 '$lt': end_utc
@@ -671,7 +674,6 @@ def today_chart_data(request, classroom):
         todayData = [event_counts[event] for event in ALL_EVENTS]
         todayLabels = ALL_EVENTS
 
-        print(f"[DEBUG] todayData: {todayData}")
         return JsonResponse({
             "todayData": todayData,
             "todayLabels": todayLabels
