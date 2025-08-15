@@ -177,8 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
               label: "event",
               backgroundColor: [
-                "#94d2bb", "#099396", "#00304e",
-                "#d62827", "#f58000",
+                "#d62827", "#94d2bb", "#099396", "#00304e", "#f58000",
               ],
               data: chartInfo.data
             }]
@@ -217,7 +216,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const pCount = document.createElement("p");
         pCount.style.marginTop = "15px";
         pCount.style.fontWeight = "bold";
-        pCount.innerText = countMessage;
+        // 메시지 안에서 fighting 부분만 span으로 감싸서 red
+        if (countMessage.includes("fighting")) {
+          const modifiedMessage = countMessage.replace(
+            "fighting",
+            '<span style="color:red; font-weight:bold;">fighting</span>'
+          );
+          pCount.innerHTML = modifiedMessage; // innerHTML 사용
+        } else {
+          pCount.innerText = countMessage;
+        }
 
         chartContainer.appendChild(pCount);
 
@@ -258,14 +266,14 @@ document.addEventListener('DOMContentLoaded', function () {
             datasets: [{
               label: "event",
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
+                'rgba(247, 46, 46, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
                 'rgba(255, 205, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
+                'rgb(252, 83, 83)',
                 'rgb(255, 159, 64)',
                 'rgb(255, 205, 86)',
                 'rgb(75, 192, 192)',
@@ -299,7 +307,15 @@ document.addEventListener('DOMContentLoaded', function () {
           const pRatio = document.createElement("p");
           pRatio.style.fontWeight = "bold";
           pRatio.style.textAlign = "center";
-          pRatio.innerText = ratioMessage;
+          if (ratioMessage.includes("fighting")) {
+            const modifiedRatio = ratioMessage.replace(
+              "fighting",
+              '<span style="color:red; font-weight:bold;">fighting</span>'
+            );
+            pRatio.innerHTML = modifiedRatio;
+          } else {
+            pRatio.innerText = ratioMessage;
+          }
           chartContainer.appendChild(pRatio);
         }
       }
