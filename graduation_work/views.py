@@ -671,7 +671,7 @@ def today_chart_data(request, classroom):
         todayData = [event_counts[event] for event in ALL_EVENTS]
         todayLabels = ALL_EVENTS
 
-        print(f"[DEBUG] event_counts: {event_counts}")
+        print(f"[DEBUG] todayData: {todayData}")
         return JsonResponse({
             "todayData": todayData,
             "todayLabels": todayLabels

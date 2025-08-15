@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
       const chartContainer = document.getElementById("doughnut-box");
 
-      console.log("Chart Info:", chartInfo); // 디버깅용 로그
+      console.log("전체 데이터 Chart Info:", chartInfo); // 디버깅용 로그
 
       if (totalEvents === 0) {
         // 데이터가 없을 때 <p> 메시지 삽입
@@ -243,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(chartInfo => {
       const totalEvents = chartInfo.todayData.reduce((sum, val) => sum + val, 0);
       const chartContainer = document.getElementById("bar-box");
+
+      console.log("당일 데이터 Chart Info:", chartInfo); // 디버깅용 로그
 
       if (totalEvents === 0) {
         // 데이터가 없을 때 <p> 메시지 삽입
