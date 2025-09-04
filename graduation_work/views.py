@@ -635,42 +635,46 @@ def chart_data(request, classroom):
 
 # 오늘 하루 데이터 가져오는 것
 def today_chart_data(request, classroom):
-        # 한국 시간대 기준
-        kst = pytz.timezone('Asia/Seoul')
-        
-        # 오늘 날짜 (KST 기준)
-        today_kst = datetime.now(kst).date()
-        start_kst = datetime.combine(today_kst, time(0, 0, 0), tzinfo=kst)
-        end_kst = start_kst + timedelta(days=1)
+    # 한국 시간대 기준
+    kst = pytz.timezone('Asia/Seoul')
 
-        # KST → UTC 변환 (DB 조회용)
-        start_utc = start_kst.astimezone(pytz.utc)
-        end_utc = end_kst.astimezone(pytz.utc)
+    # 오늘 날짜 (KST 기준)
+    today_kst = datetime.now(kst).date()
+    start_kst = datetime.combine(today_kst, time(0, 0, 0), tzinfo=kst)
+    end_kst = start_kst + timedelta(days=1)
 
-        child_docs = children_collection.find({"classroom": classroom})
-        child_ids = [doc["_id"] for doc in child_docs]
+    # KST → UTC 변환 (DB 조회용)
+    start_utc = start_kst.astimezone(pytz.utc)
+    end_utc = end_kst.astimezone(pytz.utc)
 
-        query = {
-            "child_id": {"$in": child_ids},
-            'timestamp': {
-                '$gte': start_utc,
-                '$lt': end_utc
-            }
+    # 학급에 속한 아이들 ID
+    child_docs = children_collection.find({"classroom": classroom})
+    child_ids = [doc["_id"] for doc in child_docs]
+
+    # MongoDB 쿼리 (timestamp string/datetime 모두 대응, 밀리초 포함)
+    query = {
+        "child_id": {"$in": child_ids},
+        "$expr": {
+            "$and": [
+                {"$gte": [{"$toDate": "$timestamp"}, start_utc]},
+                {"$lt": [{"$toDate": "$timestamp"}, end_utc]}
+            ]
         }
+    }
 
-        # 이벤트 카운트 초기화
-        ALL_EVENTS = ["fighting", "eating", "running", "sitting", "sleeping"]
-        event_counts = {event: 0 for event in ALL_EVENTS}
+    # 이벤트 카운트 초기화
+    ALL_EVENTS = ["fighting", "eating", "running", "sitting", "sleeping"]
+    event_counts = {event: 0 for event in ALL_EVENTS}
 
-        for doc in results_collection.find(query):
-            event_type = doc.get('event_type')
-            if event_type in event_counts:
-                event_counts[event_type] += 1
+    for doc in results_collection.find(query):
+        event_type = doc.get('event_type')
+        if event_type in event_counts:
+            event_counts[event_type] += 1
 
-        todayData = [event_counts[event] for event in ALL_EVENTS]
-        todayLabels = ALL_EVENTS
+    todayData = [event_counts[event] for event in ALL_EVENTS]
+    todayLabels = ALL_EVENTS
 
-        return JsonResponse({
-            "todayData": todayData,
-            "todayLabels": todayLabels
+    return JsonResponse({
+        "todayData": todayData,
+        "todayLabels": todayLabels
     })
