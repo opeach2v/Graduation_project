@@ -306,18 +306,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // 위험 행동 계산
-        const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
+        const totalEvents2 = chartInfo.todaydata.reduce(
+          (sum, val) => sum + val,
+          0
+        );
         const fightingIndex = chartInfo.todayLabels.indexOf("fighting");
         let countMessage = "";
         let ratioMessage = "";
 
-        if (fightingIndex !== -1 && totalEvents > 0) {
+        if (fightingIndex !== -1 && totalEvents2 > 0) {
           const fightingCount = chartInfo.todayData[fightingIndex];
-          const fightingRatio = ((fightingCount / totalEvents) * 100).toFixed(
+          const fightingRatio = ((fightingCount / totalEvents2) * 100).toFixed(
             1
           );
 
-          countMessage = `오늘의 위험 행동(fighting)/전체 행동: ${fightingCount}/${totalEvents}`;
+          countMessage = `오늘의 위험 행동(fighting)/전체 행동: ${fightingCount}/${totalEvents2}`;
           ratioMessage = `오늘의 위험 행동(fighting) 비율: ${fightingRatio}%`;
         } else {
           countMessage = `오늘의 위험 행동(fighting) 데이터가 없습니다.`;
