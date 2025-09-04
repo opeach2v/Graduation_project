@@ -483,11 +483,14 @@ def showNotice_cont(request, id):
         print(f"query:", querys)
         print(f"cont:", cont)
 
+        # 오늘 행동 분석 (timestamp 형식 상관없이)
         query = {
             'child_id': ObjectId(id),
-            'timestamp': {
-                '$gte': start_utc,
-                '$lt': end_utc
+            "$expr": {
+                "$and": [
+                    {"$gte": [{"$toDate": "$timestamp"}, start_utc]},
+                    {"$lt": [{"$toDate": "$timestamp"}, end_utc]}
+                ]
             }
         }
         print(f"query: {query}")
