@@ -306,6 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // 위험 행동 계산
+        const totalEvents = chartInfo.data.reduce((sum, val) => sum + val, 0);
         const fightingIndex = chartInfo.todayLabels.indexOf("fighting");
         let countMessage = "";
         let ratioMessage = "";
