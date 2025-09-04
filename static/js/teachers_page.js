@@ -288,11 +288,9 @@ document.addEventListener("DOMContentLoaded", function () {
             ],
           },
           options: {
-            plugins: {
-              title: {
-                display: true,
-                text: "오늘의 행동 분석 (건)",
-              },
+            title: {
+              display: true,
+              text: "오늘의 행동 분석 (건)",
             },
             scales: {
               y: {
