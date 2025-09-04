@@ -292,25 +292,17 @@ document.addEventListener("DOMContentLoaded", function () {
               display: true,
               text: "오늘의 행동 분석 (건)",
             },
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  precision: 0,
-                },
-              },
-            },
           },
         });
 
+        let countMessage = "";
+        let ratioMessage = "";
         // 위험 행동 계산
         const totalEvents2 = chartInfo.todayData.reduce(
           (sum, val) => sum + val,
           0
         );
         const fightingIndex = chartInfo.todayLabels.indexOf("fighting");
-        let countMessage = "";
-        let ratioMessage = "";
 
         if (fightingIndex !== -1 && totalEvents2 > 0) {
           const fightingCount = chartInfo.todayData[fightingIndex];
