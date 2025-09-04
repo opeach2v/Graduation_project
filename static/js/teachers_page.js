@@ -333,6 +333,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const pCount = document.createElement("p");
         pCount.style.marginTop = "15px";
         pCount.style.fontWeight = "bold";
+        pCount.style.color = "black";
         pCount.innerText = countMessage;
 
         chartContainer.appendChild(pCount);
