@@ -304,6 +304,25 @@ document.addEventListener("DOMContentLoaded", function () {
             },
           },
         });
+
+        // 위험 행동 계산
+        const fightingIndex = chartInfo.todayLabels.indexOf("fighting");
+        let countMessage = "";
+        let ratioMessage = "";
+
+        if (fightingIndex !== -1 && totalEvents > 0) {
+          const fightingCount = chartInfo.todayData[fightingIndex];
+          const fightingRatio = ((fightingCount / totalEvents) * 100).toFixed(
+            1
+          );
+
+          countMessage = `오늘의 위험 행동(fighting)/전체 행동: ${fightingCount}/${totalEvents}`;
+          ratioMessage = `오늘의 위험 행동(fighting) 비율: ${fightingRatio}%`;
+        } else {
+          countMessage = `오늘의 위험 행동(fighting) 데이터가 없습니다.`;
+          ratioMessage = "";
+        }
+
         const chartContainer = document.getElementById("bar-box");
 
         // 부모가 flex row면 아래처럼 바꿔줘도 됨
