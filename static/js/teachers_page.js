@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // 위험 행동 계산
-        const totalEvents2 = chartInfo.todaydata.reduce(
+        const totalEvents2 = chartInfo.todayData.reduce(
           (sum, val) => sum + val,
           0
         );
